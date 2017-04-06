@@ -1,0 +1,10 @@
+[
+  {
+    "name": "JSONPlaceholder #1",
+    "baseUrl": "http://jsonplaceholder.typicode.com"
+  },
+  {
+    "name": "JSONPlaceholder #2",
+    "baseUrl": "http://jsonplaceholder.typicode.com"
+  }
+]

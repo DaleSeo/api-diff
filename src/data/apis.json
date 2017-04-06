@@ -1,0 +1,15 @@
+[
+  {
+    "method": "GET",
+    "path": "/posts/1"
+  },
+  {
+    "method": "POST",
+    "path": "/posts",
+    "body": {
+      "title": "foo",
+      "body": "bar",
+      "userId": 1
+    }
+  }
+]

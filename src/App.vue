@@ -19,36 +19,16 @@ import Targets from './components/Targets.vue'
 import Apis from './components/Apis.vue'
 import Results from './components/Results.vue'
 
+import targets from './data/targets.json'
+import apis from './data/apis.json'
+
 export default {
   name: 'app',
   components: {PageHeader, Targets, Apis, Results},
   data () {
     return {
-      targets: [
-        {
-          "name": "JSONPlaceholder #1",
-          "baseUrl": "http://jsonplaceholder.typicode.com"
-        },
-        {
-          "name": "JSONPlaceholder #2",
-          "baseUrl": "http://jsonplaceholder.typicode.com"
-        }
-      ],
-      apis: [
-        {
-          "method": "GET",
-          "path": "/posts/1"
-        },
-        {
-          "method": "POST",
-          "path": "/posts",
-          "body": {
-            title: 'foo',
-            body: 'bar',
-            userId: 1
-          }
-        }
-      ],
+      targets,
+      apis,
       results: []
     }
   }
