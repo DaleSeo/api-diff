@@ -3,10 +3,10 @@
     <PageHeader>API Diff</PageHeader>
     <div class="row">
       <div class="col-md-3">
-        <Targets :targets="targets"/>
+        <Targets :targets="targets" @runTest="checkDiff"/>
         <Apis :apis="apis"/>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-6">
         <Results :results="results"/>
       </div>
     </div>
@@ -19,17 +19,25 @@ import Targets from './components/Targets.vue'
 import Apis from './components/Apis.vue'
 import Results from './components/Results.vue'
 
-import targets from './data/targets.json'
+import services from './data/services.json'
 import apis from './data/apis.json'
+
+import DiffChecker from './services/DiffChecker'
+const diffChecker = new DiffChecker()
 
 export default {
   name: 'app',
   components: {PageHeader, Targets, Apis, Results},
   data () {
     return {
-      targets,
+      targets: services[0].hosts,
       apis,
       results: []
+    }
+  },
+  methods: {
+    checkDiff () {
+      diffChecker.execute()
     }
   }
 }
