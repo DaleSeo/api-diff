@@ -4,11 +4,12 @@
       <h4>Host List</h4>
     </div>
     <div class="panel-body" @submit.prevent="runTest">
-      <ul class="list-group">
-        <li class="list-group-item" v-for="host in hosts">
+      <div class="checkbox" v-for="host in hosts">
+        <label>
+          <input type="checkbox" value=""/>
           {{host.baseUrl}}
-        </li>
-      </ul>
+        </label>
+      </div>
     </div>
   </div>
 </template>

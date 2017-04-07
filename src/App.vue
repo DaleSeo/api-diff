@@ -1,12 +1,14 @@
 <template>
   <div id="app" class="container">
     <PageHeader>API Diff</PageHeader>
+    <ButtonList :service="service" @diff="pushResult"/>
     <ServiceList :services="services" @select="selectService"/>
-    <Service v-if="service" :service="service"/>
+    <Service v-if="service" :service="service" :results="results"/>
   </div>
 </template>
 
 <script>
+import ButtonList from './components/ButtonList.vue'
 import PageHeader from './components/PageHeader.vue'
 import ServiceList from './components/ServiceList.vue'
 import Service from './components/Service.vue'
@@ -18,10 +20,11 @@ const diffChecker = new DiffChecker()
 export default {
   name: 'app',
   components: {
-    PageHeader, ServiceList, Service
+    ButtonList, PageHeader, ServiceList, Service
   },
   firebase: {
-    services: db.ref('services')
+    services: db.ref('services'),
+    results: db.ref('results')
   },
   data () {
     return {
@@ -35,6 +38,10 @@ export default {
     },
     checkDiff () {
       diffChecker.execute()
+    },
+    pushResult (result) {
+      console.log('pushResult:', result)
+      db.ref('results').push(result)
     }
   }
 }

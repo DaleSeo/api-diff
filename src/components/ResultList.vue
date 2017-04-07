@@ -4,7 +4,8 @@
       <h4>Result List</h4>
     </div>
     <div class="panel-body">
-      <div class="well" v-if="results.length">{{results[0]}}</div>
+      <pre v-for="result in results" v-text="JSON.stringify(result, null, 2)">
+      </pre>
     </div>
   </div>
 </template>

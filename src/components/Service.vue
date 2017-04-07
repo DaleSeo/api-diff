@@ -5,7 +5,7 @@
       <ApiList :apis="service.apis"/>
     </div>
     <div class="col-md-8">
-      <ResultList :results="[]"/>
+      <ResultList :results="results"/>
     </div>
   </div>
 </template>
@@ -19,6 +19,8 @@ export default {
   components: {
     HostList, ApiList, ResultList
   },
-  props: ['service']
+  props: [
+    'service', 'results'
+  ]
 }
 </script>
