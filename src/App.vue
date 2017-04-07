@@ -1,23 +1,15 @@
 <template>
   <div id="app" class="container">
     <PageHeader>API Diff</PageHeader>
-    <div class="row">
-      <div class="col-md-3">
-        <Targets :services="services" @runTest="checkDiff"/>
-        <Apis :apis="apis"/>
-      </div>
-      <div class="col-md-6">
-        <Results :results="results"/>
-      </div>
-    </div>
+    <ServiceList :services="services" @select="selectService"/>
+    <Service v-if="service" :service="service"/>
   </div>
 </template>
 
 <script>
 import PageHeader from './components/PageHeader.vue'
-import Targets from './components/Targets.vue'
-import Apis from './components/Apis.vue'
-import Results from './components/Results.vue'
+import ServiceList from './components/ServiceList.vue'
+import Service from './components/Service.vue'
 
 import db from './services/database'
 import DiffChecker from './services/DiffChecker'
@@ -25,20 +17,22 @@ const diffChecker = new DiffChecker()
 
 export default {
   name: 'app',
-  components: {PageHeader, Targets, Apis, Results},
+  components: {
+    PageHeader, ServiceList, Service
+  },
   firebase: {
-    services: db.ref('services'),
-    apis: db.ref('apis'),
-    results: db.ref('results')
+    services: db.ref('services')
   },
   data () {
     return {
-      services: db.ref('services'),
-      apis: db.ref('apis'),
-      results: db.ref('results')
+      service: ''
     }
   },
   methods: {
+    selectService (service) {
+      console.log('slectService:', service)
+      this.service = service
+    },
     checkDiff () {
       diffChecker.execute()
     }
