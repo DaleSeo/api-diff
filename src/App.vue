@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="container">
     <PageHeader>API Diff</PageHeader>
-    <ButtonList :service="service" @diff="pushResult"/>
     <ServiceList :services="services" @select="selectService"/>
+    <ButtonList v-if="service" :service="service" @diff="pushResult"/>
     <Service v-if="service" :service="service" :results="results"/>
   </div>
 </template>
@@ -37,11 +37,14 @@ export default {
       this.service = service
     },
     checkDiff () {
-      diffChecker.execute()
     },
-    pushResult (result) {
-      console.log('pushResult:', result)
-      db.ref('results').push(result)
+    pushResult () {
+      console.log('pushResult')
+      diffChecker.execute(this.service, result => {
+        console.log('result:', result)
+        db.ref('results').remove()
+        db.ref('results').push(result)
+      })
     }
   }
 }

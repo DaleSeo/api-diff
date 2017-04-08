@@ -20,7 +20,6 @@ export default {
   props: ['services'],
   methods: {
     select (service, event) {
-      console.log(event.target.className)
       event.target.className = "list-group-item active"
       this.$emit('select', service)
     }
