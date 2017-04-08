@@ -2,8 +2,8 @@
   <div id="app" class="container">
     <PageHeader>API Diff</PageHeader>
     <ServiceList :services="services" @select="selectService"/>
-    <ButtonList v-if="service" :service="service" @diff="pushResult"/>
-    <Service v-if="service" :service="service" :results="results"/>
+    <ButtonList v-if="service" :service="service" @createSuite="createSuite"/>
+    <Service v-if="service" :service="service" :suites="suites"/>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
   },
   firebase: {
     services: db.ref('services'),
-    results: db.ref('results')
+    suites: db.ref('suites').limitToLast(10)
   },
   data () {
     return {
@@ -38,11 +38,17 @@ export default {
     },
     checkDiff () {
     },
-    pushResult () {
-      console.log('pushResult')
-      diffChecker.execute(this.service, _ => {
-        window.alert('Done!')
-      })
+    createSuite () {
+      console.log('createSuite')
+      let suite = {
+        date: Date(),
+        serviceKey: this.service['.key'],
+        status: 'ToDo'
+      }
+      this.$firebaseRefs.suites.push(suite)
+      // diffChecker.execute(this.service, _ => {
+      //   window.alert('Done!')
+      // })
     }
   }
 }

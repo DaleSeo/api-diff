@@ -55,35 +55,42 @@ class DiffChecker {
 
   execute (service, callback) {
     console.log('DiffChecker#service')
-    this.db.ref('results').remove()
 
-    service.apis.forEach((api, i) => {
-      service.hosts.forEach((host, j) => {
-        let result = {
-          date: Date(),
-          serviceKey: service['.key'],
-          apiIdx: i,
-          hostIdx: j,
-          request: {
-            method: api.method,
-            url: host.baseUrl + api.path,
-            body: api.body || ''
-          }
-        }
-        superagent(api.method, host.baseUrl + api.path)
-          .send(api.body)
-          .then(res => {
-            result.response = {
-              statusCode: res.statusCode,
-              statusText: res.statusText,
-              headers: res.header,
-              body: res.body,
-              text: res.text
-            }
-            this.db.ref('results').push(result)
-          })
-      })
-    })
+    // push suite
+    let suite = {
+      date: Date(),
+      serviceKey: service['.key']
+    }
+    this.db.ref('suites').push(suite)
+
+    // push cases
+    // service.apis.forEach((api, i) => {
+    //   service.hosts.forEach((host, j) => {
+    //     let case = {
+    //       date: Date(),
+    //       suiteKey: service['.key'],
+    //       apiIdx: i,
+    //       hostIdx: j,
+    //       request: {
+    //         method: api.method,
+    //         url: host.baseUrl + api.path,
+    //         body: api.body || ''
+    //       }
+    //     }
+    //     superagent(api.method, host.baseUrl + api.path)
+    //       .send(api.body)
+    //       .then(res => {
+    //         case.response = {
+    //           statusCode: res.statusCode,
+    //           statusText: res.statusText,
+    //           headers: res.header,
+    //           body: res.body,
+    //           text: res.text
+    //         }
+    //         this.db.ref('cases').push(case)
+    //       })
+    //   })
+    // })
   }
 }
 

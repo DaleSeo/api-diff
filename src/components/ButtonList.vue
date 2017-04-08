@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="pull-right">
-      <button type="button" class="btn btn-default" @click="diff">Diff</button>
+      <button type="button" class="btn btn-default" @click="createSuite">Create a suite</button>
       <button type="button" class="btn btn-default" @click="config">Config</button>
     </div>
   </div>
@@ -11,8 +11,8 @@
 export default {
   props: ['service'],
   methods: {
-    diff() {
-      this.$emit('diff')
+    createSuite() {
+      this.$emit('createSuite')
     },
     config() {
       window.alert('Not ready!')
