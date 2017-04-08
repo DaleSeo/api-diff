@@ -40,10 +40,8 @@ export default {
     },
     pushResult () {
       console.log('pushResult')
-      diffChecker.execute(this.service, result => {
-        console.log('result:', result)
-        db.ref('results').remove()
-        db.ref('results').push(result)
+      diffChecker.execute(this.service, _ => {
+        window.alert('Done!')
       })
     }
   }

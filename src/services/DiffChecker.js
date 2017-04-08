@@ -1,8 +1,10 @@
-import request from 'superagent'
+import db from './database'
+import superagent from 'superagent'
 
 class DiffChecker {
 
   constructor () {
+    this.db = db
     // this.mock_result = {
     //   serviceKey: this.service['.key'],
     //   date: Date(),
@@ -53,34 +55,34 @@ class DiffChecker {
 
   execute (service, callback) {
     console.log('DiffChecker#service')
-    let result = {
-      serviceKey: service['.key'],
-      date: Date()
-    }
-    let promises = []
-    service.apis.forEach(api => {
-      service.hosts.forEach(host => {
-        let url = host.baseUrl + api.path
-        promises.push(request(api.method, url).send(api.body))
-      })
-    })
-    Promise.all(promises).then(responses => {
-      result.results = responses.map(res => {
-        console.log('res:', res)
-        let request = {
-          method: res.req.method,
-          url: res.req.url
+    this.db.ref('results').remove()
+
+    service.apis.forEach((api, i) => {
+      service.hosts.forEach((host, j) => {
+        let result = {
+          date: Date(),
+          serviceKey: service['.key'],
+          apiIdx: i,
+          hostIdx: j,
+          request: {
+            method: api.method,
+            url: host.baseUrl + api.path,
+            body: api.body || ''
+          }
         }
-        let response = {
-          statusCode: res.statusCode,
-          statusText: res.statusText,
-          headers: res.header,
-          body: res.body,
-          text: res.text
-        }
-        return {request, response}
+        superagent(api.method, host.baseUrl + api.path)
+          .send(api.body)
+          .then(res => {
+            result.response = {
+              statusCode: res.statusCode,
+              statusText: res.statusText,
+              headers: res.header,
+              body: res.body,
+              text: res.text
+            }
+            this.db.ref('results').push(result)
+          })
       })
-      callback(result)
     })
   }
 }
