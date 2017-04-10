@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import App from './App.vue'
 import Suite from './Suite.vue'
+import Config from './components/config/Config.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueFire)
@@ -11,6 +12,7 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     {path: '/', component: App},
+    {path: '/config', component: Config},
     {path: '/suites/:id', component: Suite, props: true}
   ]
 })
