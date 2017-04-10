@@ -16,9 +16,7 @@ import ApiList from './ApiList.vue'
 import SuiteList from './SuiteList.vue'
 
 export default {
-  components: {
-    HostList, ApiList, SuiteList
-  },
+  components: {HostList, ApiList, SuiteList},
   props: [
     'service', 'suites'
   ]
