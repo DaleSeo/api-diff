@@ -1,22 +1,14 @@
 <template>
   <div clsss="row">
-    <h2>API Config</h2>
-    <hr/>
-
-    <dl>
-      <dt>ID</dt>
-      <dd>{{service.id}}</dd>
-      <dt>Title</dt>
-      <dd>{{service.title}}</dd>
-    </dl>
-
-    <ul class="nav nav-tabs">
-      <li :class="{active: tab === 'hosts'}"><a href="#hosts" @click="tab = 'hosts'">Hosts</a></li>
-      <li :class="{active: tab === 'requests'}"><a href="#requests" @click="tab = 'requests'">Requests</a></li>
-    </ul>
-
-    <HostList id="hosts" :hosts="service.hosts" v-show="tab === 'hosts'"/>
-    <RequestList id="requests" :serviceKey="serviceKey" v-show="tab === 'requests'"/>
+    <div class="page-header">
+      <h2>{{service.title}}</h2>
+    </div>
+    <div class="col-md-6">
+      <HostList id="hosts" :hosts="service.hosts"/>
+    </div>
+    <div class="col-md-6">
+      <RequestList id="requests" :serviceKey="serviceKey"/>
+    </div>
   </div>
 </template>
 
@@ -39,7 +31,6 @@ export default {
   },
   data () {
     return {
-      tab: 'hosts'
     }
   }
 }

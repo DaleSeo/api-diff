@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Requests
+    </div>
     <ul class="list-group">
       <li class="list-group-item" v-for="request in requests">
         <h5 class="list-group-item-heading">
@@ -12,7 +15,9 @@
         </p>
       </li>
     </ul>
-    <RequestForm :request="request" @create="create"/>
+    <div class="panel-body">
+      <RequestForm :request="request" @create="create"/>
+    </div>
   </div>
 </template>
 

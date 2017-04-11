@@ -1,5 +1,4 @@
 <template>
-  <div class="well">
     <form @submit.prevent="create">
       <div class="form-group">
         <label for="method">Method</label>
@@ -11,7 +10,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="url">URL</label>
+        <label for="url">Path</label>
         <input id="url" type="text" class="form-control" v-model="request.url"/>
       </div>
       <div class="form-group">
@@ -25,7 +24,6 @@
         </div>
       </div>
     </form>
-  </div>
 </template>
 
 <script>
