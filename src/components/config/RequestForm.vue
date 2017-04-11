@@ -42,7 +42,7 @@ export default {
     return {
       request: {
         method: 'GET',
-        url: 'http://jsonplaceholder.typicode.com/posts/1',
+        url: '',
         text: ''
       }
     }

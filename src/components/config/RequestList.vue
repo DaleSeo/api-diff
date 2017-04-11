@@ -5,14 +5,13 @@
     </div>
     <ul class="list-group">
       <li class="list-group-item" v-for="request in requests">
-        <h5 class="list-group-item-heading">
+        <p class="list-group-item-heading">
           <span class="label" :class="className(request.method)">{{request.method}}</span>
           &nbsp;<em @click="select(request)">{{request.url}}</em>
           <button class="close" @click="remove(request)">&times;</button>
-        </h5>
-        <p class="list-group-item-text">
-          {{request.body}}
         </p>
+        <pre v-if="request.body" v-text="request.body">
+        </pre>
       </li>
     </ul>
     <div class="panel-body">
