@@ -1,43 +1,19 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Requests
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item" v-for="request in requests">
-        <p class="list-group-item-heading">
-          <span class="label" :class="className(request.method)">{{request.method}}</span>
-          &nbsp;<em @click="select(request)">{{request.url}}</em>
-          <button class="close" @click="remove(request)">&times;</button>
-        </p>
-        <pre v-if="request.body" v-text="request.body">
-        </pre>
-      </li>
-    </ul>
-    <div class="panel-body">
-      <RequestForm @create="create"/>
-    </div>
-  </div>
+  <ul class="list-group">
+    <li class="list-group-item" v-for="request in requests">
+      <p class="list-group-item-heading">
+        <span class="label" :class="className(request.method)">{{request.method}}</span>
+        &nbsp;<em @click="select(request)">{{request.url}}</em>
+        <button class="close" @click="remove(request)">&times;</button>
+      </p>
+      <pre v-if="request.body" v-text="request.body"/>
+    </li>
+  </ul>
 </template>
 
 <script>
-import RequestForm from './RequestForm.vue'
-
-import db from '../../services/database'
-
 export default {
-  components: {RequestForm},
-  props: ['apiKey'],
-  firebase () {
-    return {
-      requests: db.ref('apis/' + this.apiKey).child('requests')
-    }
-  },
-  data () {
-    return {
-      showsForm: false
-    }
-  },
+  props: ['requests'],
   methods: {
     className (method) {
       switch (method) {
@@ -48,17 +24,8 @@ export default {
         default: return 'label-primary'
       }
     },
-    create (request) {
-      console.log('#create')
-      this.$firebaseRefs.requests.push(request)
-    },
-    modify (request) {
-      console.log('#modify')
-      this.$firebaseRefs.requests.child(request['.key']).set(request)
-    },
     remove (request) {
-      console.log('#remove')
-      this.$firebaseRefs.requests.child(request['.key']).remove()
+      this.$emit('remove')
     }
   }
 }
