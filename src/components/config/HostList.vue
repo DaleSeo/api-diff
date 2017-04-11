@@ -3,23 +3,44 @@
     <div class="panel-heading">
       Hosts
     </div>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="host in hosts">
+        {{host['.value']}}
+      </li>
+    </ul>
     <div class="panel-body">
-      <div class="checkbox" v-for="host in hosts">
-        <label>
-          <input type="checkbox" value=""/>
-          {{host.baseUrl}}
-        </label>
-      </div>
+      <form @submit.prevent="add(newHost)">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="http:// 또는 https:// 로 시작할 것" v-model="newHost"/>
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">추가</button>
+          </span>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+import db from '../../services/database'
+
 export default {
-  props: ['hosts'],
+  props: ['apiKey'],
+  firebase () {
+    return {
+      hosts: db.ref('apis/' + this.apiKey).child('hosts')
+    }
+  },
+  data () {
+    return {
+      newHost: ''
+    }
+  },
   methods: {
-    runTest () {
-      this.$emit('runTest')
+    add (host) {
+      console.log('# add to ', this.$firebaseRefs.hosts.toString())
+      this.$firebaseRefs.hosts.push(host)
+      this.newHost = ''
     }
   }
 }

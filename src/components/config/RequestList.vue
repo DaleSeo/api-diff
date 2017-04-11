@@ -7,8 +7,8 @@
       <li class="list-group-item" v-for="request in requests">
         <h5 class="list-group-item-heading">
           <span class="label" :class="className(request.method)">{{request.method}}</span>
-          &nbsp;<em @click="select(call)">{{request.url}}</em>
-          <button class="close" @click="remove(call)">&times;</button>
+          &nbsp;<em @click="select(request)">{{request.url}}</em>
+          <button class="close" @click="remove(request)">&times;</button>
         </h5>
         <p class="list-group-item-text">
           {{request.body}}
@@ -16,7 +16,7 @@
       </li>
     </ul>
     <div class="panel-body">
-      <RequestForm :request="request" @create="create"/>
+      <RequestForm @create="create"/>
     </div>
   </div>
 </template>
@@ -28,10 +28,10 @@ import db from '../../services/database'
 
 export default {
   components: {RequestForm},
-  props: ['serviceKey'],
+  props: ['apiKey'],
   firebase () {
     return {
-      requests: db.ref('services/' + this.serviceKey).child('requests')
+      requests: db.ref('apis/' + this.apiKey).child('requests')
     }
   },
   data () {
