@@ -3,13 +3,13 @@
     <div class="col-md-7">
       <RequestList
         :requests="requests" :activeRequest="activeRequest"
-        @create="create" @remove="remove" @detail="detail"
+        @detail="detail" @create="create"
       />
     </div>
     <div class="col-md-5">
       <RequestForm v-if="activeRequest['.key']"
         :request="activeRequest"
-        @modify="modify" @detail="detail"
+        @reset="reset" @modify="modify" @remove="remove"
       />
     </div>
   </div>
@@ -21,6 +21,20 @@ import RequestForm from './RequestForm.vue'
 
 import db from '../../services/database'
 
+function getInitialData() {
+  return {
+    activeRequest: {
+      '.key': '',
+      method: 'GET',
+      url: '',
+      text: '',
+      description: '',
+      exclusion: '',
+      skip: false
+    }
+  }
+}
+
 export default {
   components: {RequestList, RequestForm},
   props: ['apiKey'],
@@ -30,52 +44,39 @@ export default {
     }
   },
   data () {
-    return {
-      activeRequest: {
-        '.key': '',
-        method: 'GET',
-        url: '',
-        text: '',
-        description: '',
-        ignoreKeys: ['date', 'time'],
-        skip: false
-      }
-    }
+    return getInitialData()
   },
   methods: {
-    className (method) {
-      switch (method) {
-        case 'GET': return 'label-success'
-        case 'POST': return 'label-info'
-        case 'PUT': return 'label-warning'
-        case 'DELETE': return 'label-danger'
-        default: return 'label-primary'
-      }
+    reset () {
+      console.log('#reset')
+      Object.assign(this.$data, getInitialData())
     },
     detail (request) {
       console.log('#detail')
       this.activeRequest = request
-      if (!this.activeRequest.ignoreKeys) {
-        this.activeRequest.ignoreKeys = []
-      }
     },
     create () {
       console.log('#create')
-      this.activeRequest = {}
+      this.reset()
       this.$set(this.activeRequest, '.key', this.$firebaseRefs.requests.push().key)
     },
     modify () {
       console.log('#modify')
-      let key = this.activeRequest['.key']
-      console.log('key:', key)
-      delete this.activeRequest['.key']
-      console.log('data:', this.activeRequest)
-      this.$firebaseRefs.requests.child(key).set(this.activeRequest)
-      this.activeRequest = {}
+      let request = Object.assign({}, this.activeRequest)
+      delete request['.key']
+      if (request.text.trim()) {
+        try {
+          request.body = JSON.parse(request.text)
+        } catch (err) {
+          return window.alert(err)
+        }
+      }
+      this.$firebaseRefs.requests.child(this.activeRequest['.key']).set(request)
     },
-    remove (request) {
+    remove () {
       console.log('#remove')
-      this.$firebaseRefs.requests.child(request['.key']).remove()
+      this.$firebaseRefs.requests.child(this.activeRequest['.key']).remove()
+      this.reset()
     }
   }
 }

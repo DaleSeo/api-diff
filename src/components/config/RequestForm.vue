@@ -1,11 +1,11 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <strong>요청 상세</strong>
-      <small>({{request['.key']}})</small>
-    </div>
-    <div class="panel-body">
-      <form @submit.prevent="modify" @reset.prevent="cancel">
+  <form @submit.prevent="modify" @reset.prevent="reset">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>요청 상세</strong>
+        <small>({{request['.key']}})</small>
+      </div><!-- panel-heading -->
+      <div class="panel-body">
         <div class="form-group">
           <label for="method">메소드</label>
           <select id="method" class="form-control" v-model="request.method">
@@ -21,33 +21,31 @@
         </div>
         <div class="form-group">
           <label for="body">바디</label>
-          <textarea id="body" class="form-control" rows="3" v-model="request.text"/>
+          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model="request.text"/>
         </div>
         <div class="form-group">
           <label for="description">설명</label>
-          <textarea id="description" class="form-control" rows="3" v-model="request.description"/>
+          <input id="description" class="form-control" placeholder="" v-model="request.description"/>
         </div>
         <div class="form-group">
-          <label for="ignoreKeys">
-            예외 필드{{request.ignoreKeys}}
-            <button type="button" class="btn btn-xs btn-default" @click="addIgnoreKey">+</button>
-          </label>
-          <input id="ignoreKeys" class="form-control" v-model="request.ignoreKeys[index]" v-for="(value, index) in request.ignoreKeys"/>
+          <label for="exclusion">비교 예외 항목</label>
+          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model="request.exclusion"/>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" v-model="request.skip">검증 건더뛰기
+            <input type="checkbox" v-model="request.skip">검증 생략
           </label>
         </div>
-        <div class="text-right">
-          <div class="btn-group">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"/> Save</button>
-            <button type="reset" class="btn btn-default"><i class="fa fa-undo"/> Reset</button>
-          </div>
+      </div><!-- panel-body -->
+      <div class="panel-footer text-right">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-floppy-o"/> 저장</button>
+          <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-undo"/> 취소</button>
+          <button type="button" class="btn btn-sm btn-danger" @click="remove"><i class="fa fa-trash-o"/> 삭제</button>
         </div>
-      </form>
-    </div>
-  </div>
+      </div><!-- panel-footer -->
+    </div><!-- panel -->
+  </form>
 </template>
 
 <script>
@@ -55,20 +53,13 @@ export default {
   props: ['request'],
   methods: {
     modify () {
-      if (this.request.text.trim()) {
-        try {
-          this.request.body = JSON.parse(this.request.text)
-        } catch (err) {
-          return window.alert(err)
-        }
-      }
       this.$emit('modify')
     },
-    cancel () {
-      this.$emit('detail', {})
+    remove () {
+      this.$emit('remove')
     },
-    addIgnoreKey () {
-      this.request.ignoreKeys.push('')
+    reset () {
+      this.$emit('reset')
     }
   }
 }

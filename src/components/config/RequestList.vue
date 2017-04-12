@@ -2,7 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <strong>요청 목록</strong>
-      <button class="btn btn-xs btn-primary pull-right" @click="create"><i class="fa fa-plus"/></button>
+      <button class="btn btn-xs btn-primary pull-right" @click="create"><i class="fa fa-pencil-square-o"/> 등록</button>
     </div>
     <ul class="list-group">
       <li
@@ -12,7 +12,6 @@
         <p class="list-group-item-heading">
           <span class="label" :class="className(request.method)">{{request.method}}</span>
           &nbsp;<em>{{request.url}}</em>
-          <button class="close" @click="remove(request)">&times;</button>
         </p>
         <pre v-if="request.body" v-text="request.body"/>
       </li>
@@ -38,9 +37,6 @@ export default {
     },
     detail (request) {
       this.$emit('detail', request)
-    },
-    remove (request) {
-      this.$emit('remove')
     }
   }
 }
