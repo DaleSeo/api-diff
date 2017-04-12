@@ -21,19 +21,19 @@
         </div>
         <div class="form-group">
           <label for="url">패스</label>
-          <input id="url" type="text" class="form-control" v-model="request.url"/>
+          <input id="url" type="text" class="form-control" v-model.lazy="request.url"/>
         </div>
         <div class="form-group">
           <label for="body">바디</label>
-          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model="request.text"/>
+          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model.lazy="request.text"/>
         </div>
         <div class="form-group">
           <label for="description">설명</label>
-          <input id="description" class="form-control" placeholder="" v-model="request.description"/>
+          <input id="description" class="form-control" placeholder="" v-model.lazy="request.description"/>
         </div>
         <div class="form-group">
           <label for="exclusion">비교 예외 항목</label>
-          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model="request.exclusion"/>
+          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model.lazy="request.exclusion"/>
         </div>
         <div class="checkbox">
           <label>

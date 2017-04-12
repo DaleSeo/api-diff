@@ -55,12 +55,12 @@ export default {
     },
     detail (request) {
       console.log('#detail')
-      this.activeRequest = request
+      this.activeRequest = Object.assign({}, request)
     },
     create () {
       console.log('#create')
       this.reset()
-      this.$set(this.activeRequest, '.key', this.$firebaseRefs.requests.push().key)
+      this.activeRequest['.key'] = this.$firebaseRefs.requests.push().key
     },
     modify () {
       console.log('#modify')
