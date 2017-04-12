@@ -1,10 +1,16 @@
 <template>
   <div class="row">
     <div class="col-md-7">
-      <RequestList :requests="requests" @remove="remove"/>
+      <RequestList
+        :requests="requests" :activeRequest="activeRequest"
+        @create="create" @remove="remove" @detail="detail"
+      />
     </div>
     <div class="col-md-5">
-      <RequestForm @create="create"/>
+      <RequestForm v-if="activeRequest['.key']"
+        :request="activeRequest"
+        @modify="modify" @detail="detail"
+      />
     </div>
   </div>
 </template>
@@ -25,7 +31,15 @@ export default {
   },
   data () {
     return {
-      showsForm: false
+      activeRequest: {
+        '.key': '',
+        method: 'GET',
+        url: '',
+        text: '',
+        description: '',
+        ignoreKeys: ['date', 'time'],
+        skip: false
+      }
     }
   },
   methods: {
@@ -38,13 +52,26 @@ export default {
         default: return 'label-primary'
       }
     },
-    create (request) {
-      console.log('#create')
-      this.$firebaseRefs.requests.push(request)
+    detail (request) {
+      console.log('#detail')
+      this.activeRequest = request
+      if (!this.activeRequest.ignoreKeys) {
+        this.activeRequest.ignoreKeys = []
+      }
     },
-    modify (request) {
+    create () {
+      console.log('#create')
+      this.activeRequest = {}
+      this.$set(this.activeRequest, '.key', this.$firebaseRefs.requests.push().key)
+    },
+    modify () {
       console.log('#modify')
-      this.$firebaseRefs.requests.child(request['.key']).set(request)
+      let key = this.activeRequest['.key']
+      console.log('key:', key)
+      delete this.activeRequest['.key']
+      console.log('data:', this.activeRequest)
+      this.$firebaseRefs.requests.child(key).set(this.activeRequest)
+      this.activeRequest = {}
     },
     remove (request) {
       console.log('#remove')

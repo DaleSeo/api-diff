@@ -1,9 +1,13 @@
 <template>
-  <form class="well" @submit.prevent="create">
-    <div class="row">
-      <div class="col-md-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>요청 상세</strong>
+      <small>({{request['.key']}})</small>
+    </div>
+    <div class="panel-body">
+      <form @submit.prevent="modify" @reset.prevent="cancel">
         <div class="form-group">
-          <label class="sr-only" for="method">Method</label>
+          <label for="method">메소드</label>
           <select id="method" class="form-control" v-model="request.method">
             <option>GET</option>
             <option>POST</option>
@@ -11,44 +15,46 @@
             <option>DELETE</option>
           </select>
         </div>
-      </div>
-      <div class="col-md-9">
         <div class="form-group">
-          <label class="sr-only" for="url">Path</label>
-          <input id="url" type="text" class="form-control" placeholder="Path" v-model="request.url"/>
+          <label for="url">패스</label>
+          <input id="url" type="text" class="form-control" v-model="request.url"/>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
         <div class="form-group">
-          <label class="sr-only" for="text">Body</label>
-          <textarea id="text" class="form-control" rows="3" placeholder="Body" v-model="request.text"/>
+          <label for="body">바디</label>
+          <textarea id="body" class="form-control" rows="3" v-model="request.text"/>
         </div>
-      </div>
+        <div class="form-group">
+          <label for="description">설명</label>
+          <textarea id="description" class="form-control" rows="3" v-model="request.description"/>
+        </div>
+        <div class="form-group">
+          <label for="ignoreKeys">
+            예외 필드{{request.ignoreKeys}}
+            <button type="button" class="btn btn-xs btn-default" @click="addIgnoreKey">+</button>
+          </label>
+          <input id="ignoreKeys" class="form-control" v-model="request.ignoreKeys[index]" v-for="(value, index) in request.ignoreKeys"/>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" v-model="request.skip">검증 건더뛰기
+          </label>
+        </div>
+        <div class="text-right">
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"/> Save</button>
+            <button type="reset" class="btn btn-default"><i class="fa fa-undo"/> Reset</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="text-right">
-      <div class="btn-group">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Add</button>
-        <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Cancel</button>
-      </div>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      request: {
-        method: 'GET',
-        url: '',
-        text: ''
-      }
-    }
-  },
+  props: ['request'],
   methods: {
-    create () {
+    modify () {
       if (this.request.text.trim()) {
         try {
           this.request.body = JSON.parse(this.request.text)
@@ -56,7 +62,13 @@ export default {
           return window.alert(err)
         }
       }
-      this.$emit('create', this.request)
+      this.$emit('modify')
+    },
+    cancel () {
+      this.$emit('detail', {})
+    },
+    addIgnoreKey () {
+      this.request.ignoreKeys.push('')
     }
   }
 }
