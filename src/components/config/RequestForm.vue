@@ -7,6 +7,10 @@
       </div><!-- panel-heading -->
       <div class="panel-body">
         <div class="form-group">
+          <label for="title">이름</label>
+          <input id="title" type="text" class="form-control" v-model="request.title"/>
+        </div>
+        <div class="form-group">
           <label for="method">메소드</label>
           <select id="method" class="form-control" v-model="request.method">
             <option>GET</option>
@@ -38,11 +42,9 @@
         </div>
       </div><!-- panel-body -->
       <div class="panel-footer text-right">
-        <div class="btn-group">
-          <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-floppy-o"/> 저장</button>
-          <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-undo"/> 취소</button>
-          <button type="button" class="btn btn-sm btn-danger" @click="remove"><i class="fa fa-trash-o"/> 삭제</button>
-        </div>
+        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-floppy-o"/> 저장</button>
+        <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-undo"/> 취소</button>
+        <button type="button" class="btn btn-sm btn-danger" @click="remove"><i class="fa fa-trash-o"/> 삭제</button>
       </div><!-- panel-footer -->
     </div><!-- panel -->
   </form>

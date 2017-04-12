@@ -9,6 +9,7 @@
         class="list-group-item" :class="{active: request === activeRequest}"
         @click="detail(request)" v-for="request in requests"
       >
+        <strong>{{request.title}}</strong>
         <p class="list-group-item-heading">
           <span class="label" :class="className(request.method)">{{request.method}}</span>
           &nbsp;<em>{{request.url}}</em>

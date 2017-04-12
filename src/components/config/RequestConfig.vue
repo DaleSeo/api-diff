@@ -25,9 +25,11 @@ function getInitialData() {
   return {
     activeRequest: {
       '.key': '',
+      title: '',
       method: 'GET',
       url: '',
       text: '',
+      body: '',
       description: '',
       exclusion: '',
       skip: false
@@ -70,6 +72,8 @@ export default {
         } catch (err) {
           return window.alert(err)
         }
+      } else {
+        request.body = ''
       }
       this.$firebaseRefs.requests.child(this.activeRequest['.key']).set(request)
     },
