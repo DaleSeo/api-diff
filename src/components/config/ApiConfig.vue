@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>{{api.title}}</h3>
+    <h3>{{api.title}} 설정</h3>
     <hr/>
     <div clsss="row">
       <div class="col-md-2">

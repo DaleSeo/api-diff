@@ -8,8 +8,8 @@
         <li class="list-group-item" v-for="api in apis">
           <strong>{{api.title}}</strong>
           <div class="btn-group pull-right">
-            <button class="btn btn-success btn-sm" @click="verify(api)"><i class="fa fa-play"></i></button>
-            <router-link :to="'/config/' + api['.key']" class="btn btn-warning btn-sm"><i class="fa fa-cog"></i></router-link>
+            <router-link :to="'/test/' + api['.key']" class="btn btn-success btn-sm"><i class="fa fa-play"/></router-link>
+            <router-link :to="'/config/' + api['.key']" class="btn btn-warning btn-sm"><i class="fa fa-cog"/></router-link>
             <button class="btn btn-danger btn-sm" @click="del(api)"><i class="fa fa-trash"></i></button>
           </div>
         </li>
@@ -43,9 +43,6 @@ export default {
     }
   },
   methods: {
-    verify (api) {
-      console.log('# verify')
-    },
     add (api) {
       console.log('# add')
       this.$firebaseRefs.apis.push(api)

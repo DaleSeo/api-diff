@@ -2,6 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <strong>요청 목록</strong>
+      <small>({{requests.length}})</small>
       <button class="btn btn-xs btn-primary pull-right" @click="create"><i class="fa fa-pencil-square-o"/> 등록</button>
     </div>
     <ul class="list-group">

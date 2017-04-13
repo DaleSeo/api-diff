@@ -8,14 +8,14 @@ Vue.use(VueFire)
 
 import Index from './components/Index.vue'
 import ApiConfig from './components/config/ApiConfig.vue'
-import Suite from './Suite.vue'
+import ApiTest from './components/test/ApiTest.vue'
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {path: '/', component: Index},
     {path: '/config/:apiKey', component: ApiConfig, props: true},
-    {path: '/suites/:id', component: Suite, props: true}
+    {path: '/test/:apiKey', component: ApiTest, props: true}
   ]
 })
 
