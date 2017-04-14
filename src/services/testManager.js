@@ -1,13 +1,15 @@
 import db from './database'
 
-class TestManager (
+class TestManager {
 
-  createTestCases (suite) {
-    let requests = db.ref('apis/' + suite.apiKey).child('requests')
-    
+  createTestCases (apiKey) {
+    let specRef = db.ref('apis/' + apiKey).child('specs')
+    console.log(specRef.toString())
+    specRef.on('value', function (snapshot) {
+      console.log(snapshot.val())
+    })
   }
 
-)
+}
 
-testManager = new TestManager()
-export default testManager
+export default TestManager

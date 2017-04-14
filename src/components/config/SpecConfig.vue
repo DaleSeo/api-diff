@@ -42,7 +42,7 @@ export default {
   props: ['apiKey'],
   firebase () {
     return {
-      specs: db.ref('apis/' + this.apiKey).child('requests')
+      specs: db.ref('apis/' + this.apiKey).child('specs')
     }
   },
   data () {
