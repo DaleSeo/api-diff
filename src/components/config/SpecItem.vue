@@ -1,12 +1,12 @@
 <template>
-  <li class="list-group-item" :class="{active: active}" @click="detail">
+  <button class="list-group-item" :class="{active: active}" @click="detail">
     <h4 v-show="active">{{spec.title}}</h4>
     <p class="list-group-item-heading">
       <span class="label" :class="className(spec.method)">{{spec.method}}</span>
       &nbsp;<em>{{spec.url}}</em>
     </p>
     <pre v-show="active && spec.body" v-text="spec.body"/>
-  </li>
+  </button>
 </template>
 
 <script>

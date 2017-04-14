@@ -4,10 +4,10 @@
       Hosts
     </div>
     <ul class="list-group">
-      <li class="list-group-item" v-for="host in hosts">
+      <button class="list-group-item" v-for="host in hosts">
         <b>[{{host.title}}]</b> {{host.baseUrl}}
         <button class="close" @click="del(host)">&times;</button>
-      </li>
+      </button>
     </ul>
     <div class="panel-body">
       <form @submit.prevent="add(newHost)">
