@@ -1,20 +1,20 @@
 <template>
   <li class="list-group-item" :class="{active: active}" @click="detail">
-    <h4 v-show="active">{{request.title}}</h4>
+    <h4 v-show="active">{{spec.title}}</h4>
     <p class="list-group-item-heading">
-      <span class="label" :class="className(request.method)">{{request.method}}</span>
-      &nbsp;<em>{{request.url}}</em>
+      <span class="label" :class="className(spec.method)">{{spec.method}}</span>
+      &nbsp;<em>{{spec.url}}</em>
     </p>
-    <pre v-show="active && request.body" v-text="request.body"/>
+    <pre v-show="active && spec.body" v-text="spec.body"/>
   </li>
 </template>
 
 <script>
 export default {
-  props: ['request', 'activeRequest'],
+  props: ['spec', 'activeSpec'],
   computed: {
     active () {
-      return this.request['.key'] === this.activeRequest['.key']
+      return this.spec['.key'] === this.activeSpec['.key']
     }
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       }
     },
     detail () {
-      this.$emit('detail', this.request)
+      this.$emit('detail', this.spec)
     }
   }
 }

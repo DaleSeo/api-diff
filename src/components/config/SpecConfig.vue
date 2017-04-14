@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <div class="col-md-7">
-      <RequestList
-        :requests="requests" :activeRequest="activeRequest"
+      <SpecList
+        :specs="specs" :activeSpec="activeSpec"
         @detail="detail" @create="create"
       />
     </div>
     <div class="col-md-5">
-      <RequestForm v-if="activeRequest['.key']"
-        :request="activeRequest"
+      <SpecForm v-if="activeSpec['.key']"
+        :spec="activeSpec"
         @reset="reset" @modify="modify" @remove="remove"
       />
     </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import RequestList from './RequestList.vue'
-import RequestForm from './RequestForm.vue'
+import SpecList from './SpecList.vue'
+import SpecForm from './SpecForm.vue'
 
 import db from '../../services/database'
 
 function getInitialData() {
   return {
-    activeRequest: {
+    activeSpec: {
       '.key': '',
       title: '',
       method: 'GET',
@@ -38,11 +38,11 @@ function getInitialData() {
 }
 
 export default {
-  components: {RequestList, RequestForm},
+  components: {SpecList, SpecForm},
   props: ['apiKey'],
   firebase () {
     return {
-      requests: db.ref('apis/' + this.apiKey).child('requests')
+      specs: db.ref('apis/' + this.apiKey).child('requests')
     }
   },
   data () {
@@ -53,33 +53,33 @@ export default {
       console.log('#reset')
       Object.assign(this.$data, getInitialData())
     },
-    detail (request) {
+    detail (spec) {
       console.log('#detail')
-      this.activeRequest = Object.assign({}, request)
+      this.activeSpec = Object.assign({}, spec)
     },
     create () {
       console.log('#create')
       this.reset()
-      this.activeRequest['.key'] = this.$firebaseRefs.requests.push().key
+      this.activeSpec['.key'] = this.$firebaseRefs.specs.push().key
     },
     modify () {
       console.log('#modify')
-      let request = Object.assign({}, this.activeRequest)
-      delete request['.key']
-      if (request.text.trim()) {
+      let spec = Object.assign({}, this.activeSpec)
+      delete spec['.key']
+      if (spec.text.trim()) {
         try {
-          request.body = JSON.parse(request.text)
+          spec.body = JSON.parse(spec.text)
         } catch (err) {
           return window.alert(err)
         }
       } else {
-        request.body = ''
+        spec.body = ''
       }
-      this.$firebaseRefs.requests.child(this.activeRequest['.key']).set(request)
+      this.$firebaseRefs.specs.child(this.activeSpec['.key']).set(spec)
     },
     remove () {
       console.log('#remove')
-      this.$firebaseRefs.requests.child(this.activeRequest['.key']).remove()
+      this.$firebaseRefs.specs.child(this.activeSpec['.key']).remove()
       this.reset()
     }
   }

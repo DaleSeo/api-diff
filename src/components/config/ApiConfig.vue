@@ -6,12 +6,12 @@
       <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked">
           <li :class="{active: tab === 'hosts'}" @click="tab = 'hosts'"><a href="#hosts">호스트</a></li>
-          <li :class="{active: tab === 'requests'}" @click="tab = 'requests'"><a href="#requests">요청</a></li>
+          <li :class="{active: tab === 'specs'}" @click="tab = 'specs'"><a href="#specs">요청</a></li>
         </ul>
       </div>
       <div class="col-md-10">
         <HostList id="hosts" v-show="tab === 'hosts'" :apiKey="apiKey"/>
-        <RequestConfig id="requests" v-show="tab === 'requests'" :apiKey="apiKey"/>
+        <SpecConfig id="specs" v-show="tab === 'specs'" :apiKey="apiKey"/>
       </div>
     </div>
   </div>
@@ -19,12 +19,12 @@
 
 <script>
 import HostList from './HostList.vue'
-import RequestConfig from './RequestConfig.vue'
+import SpecConfig from './SpecConfig.vue'
 
 import db from '../../services/database'
 
 export default {
-  components: {HostList, RequestConfig},
+  components: {HostList, SpecConfig},
   props: ['apiKey'],
   firebase () {
     return {
@@ -36,7 +36,7 @@ export default {
   },
   data () {
     return {
-      tab: 'requests',
+      tab: 'specs',
     }
   }
 }

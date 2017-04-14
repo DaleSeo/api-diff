@@ -1,16 +1,16 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>요청 목록</strong>
-      <small>({{requests.length}})</small>
+      <strong>규격 목록</strong>
+      <small>({{specs.length}})</small>
       <button class="btn btn-xs btn-primary pull-right" @click="create"><i class="fa fa-pencil-square-o"/> 등록</button>
     </div>
     <ul class="list-group">
-      <RequestItem
-        v-for="request in requests"
-        :key="request['.key']"
-        :request="request"
-        :activeRequest="activeRequest"
+      <SpecItem
+        v-for="spec in specs"
+        :key="spec['.key']"
+        :spec="spec"
+        :activeSpec="activeSpec"
         @detail="detail"
       />
     </ul>
@@ -18,17 +18,17 @@
 </template>
 
 <script>
-import RequestItem from './RequestItem.vue'
+import SpecItem from './SpecItem.vue'
 
 export default {
-  props: ['requests', 'activeRequest'],
-  components: {RequestItem},
+  props: ['specs', 'activeSpec'],
+  components: {SpecItem},
   methods: {
     create () {
       this.$emit('create')
     },
-    detail (request) {
-      this.$emit('detail', request)
+    detail (spec) {
+      this.$emit('detail', spec)
     }
   }
 }
