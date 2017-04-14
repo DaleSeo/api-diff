@@ -1,4 +1,6 @@
-import TestManager from '../../src/services/testManager'
+import testManager from '../../src/services/testManager'
 
-let testManager = new TestManager()
-testManager.createTestCases('-KhQ6IOWQKJZbqjexNDj')
+let apiKey = '-KhQ6IOWQKJZbqjexNDj'
+let suiteKey = '-KhbS1F4xQzmJIv0Xnpi'
+
+testManager.processTest(apiKey, suiteKey)
