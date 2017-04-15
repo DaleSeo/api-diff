@@ -1,3 +1,4 @@
+import superagent from 'superagent'
 import db from './database'
 
 function processTest (apiKey, suiteKey) {
@@ -32,17 +33,38 @@ function pushCases (suiteKey, specs, hosts) {
     .filter(spec => !spec.skip)
     .forEach(spec => {
       Object.values(hosts)
-        .forEach(host => {
+        .forEach((host, idx) => {
           let req = {
             method: spec.method,
             url: host + spec.url,
             body: spec.body
           }
-          cases.push({req: req})
+          callApi(req, (err, res) => {
+            if (err) res = {error: err}
+            console.log({req: req, res: res})
+            cases.push({req: req, res: res})
+            if (idx === Object.keys(hosts).length - 1) {
+              console.log(cases)
+              caseRef.set(cases)
+            }
+          })
         })
     })
-  console.log(cases)
-  caseRef.set(cases)
+}
+
+function callApi (req, callback) {
+  superagent(req.method, req.url)
+    .send(req.body)
+    .end((err, res) => {
+      if (err) return callback(err)
+      callback(null, {
+        statusCode: res.statusCode,
+        statusText: res.statusText || '',
+        headers: res.header,
+        body: res.body,
+        text: res.text
+      })
+    })
 }
 
 export default {
