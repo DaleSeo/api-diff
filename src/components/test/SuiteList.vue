@@ -4,7 +4,7 @@
       <strong>테스트 요청 목록</strong>
     </div>
     <ul class="list-group">
-      <router-link :to="`/test/${apiKey}/${suite['.key']}`" class="list-group-item" v-for="suite in suites">
+      <router-link :to="`/suites/${suite['.key']}`" :key="suite['.key']" class="list-group-item" v-for="suite in suites">
         {{suite.title}} by {{suite.username}}
       </router-link>
     </ul>
