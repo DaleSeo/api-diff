@@ -25,7 +25,7 @@
             <router-link class="btn btn-primary btn-xs" :to="`/suites/${suite['.key']}`">
               <i class="fa fa-list"/>
             </router-link>
-            <button class="btn btn-danger btn-xs">
+            <button class="btn btn-danger btn-xs" @click="del(suite)">
               <i class="fa fa-trash"/>
             </button>
           </td>
@@ -65,7 +65,10 @@
 <script>
 import moment from 'moment'
 
+import TestService from '../../services/TestService'
 import db from '../../services/database'
+
+const testService = new TestService()
 
 export default {
   props: ['apiKey'],
@@ -76,7 +79,7 @@ export default {
   },
   filters: {
     formatDate (date) {
-      return moment(String(date)).format('YYYY/MM/DD hh:mm:ss a')
+      return moment(date).format('YYYY/MM/DD hh:mm:ss a')
     }
   },
   firebase () {
@@ -98,9 +101,12 @@ export default {
     },
     add () {
       console.log('# add')
-      this.suite.date = Date().getTime()
-      this.$firebaseRefs.suites.push(this.suite)
+      testService.createSuite(this.suite)
       this.suite = this.getInitialSuite()
+    },
+    del (suite) {
+      console.log('# del')
+      testService.removeSuite(suite)
     }
   }
 }

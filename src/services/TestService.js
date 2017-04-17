@@ -1,33 +1,44 @@
-import { fireGet, fireSet } from '../../src/services/fireUtils'
+import { fireGet, firePush, fireRemove } from '../../src/services/fireUtils'
 import db from './database'
 
 export default class TestService {
 
-  constructor (suiteKey) {
-    this.suiteKey = suiteKey
+  createSuite (suite) {
+    suite.date = new Date().getTime()
+    firePush('suites', suite)
+      .then(this.readSpecsAndHosts)
+      .then(this.pushTests)
   }
 
-  prepareRequests () {
-    this.extractSpecsAndHosts()
-      .then(data => {
-        this.pushTests(data.specs, data.hosts)
+  removeSuite (suite) {
+    fireGet('tests', 'suiteKey', suite['.key'])
+      .then(tests => {
+        if (tests) {
+          Object.keys(tests).forEach(key => {
+            fireRemove('tests/' + key)
+          })
+        }
+        fireRemove('suites/' + suite['.key'])
       })
-
   }
 
-  extractSpecsAndHosts () {
+  readSpecsAndHosts (suiteKey) {
     return new Promise((resolve, reject) => {
-      fireGet('suites/' + this.suiteKey)
+      fireGet('suites/' + suiteKey)
         .then(suite => {
           fireGet('apis/' + suite.apiKey)
           .then(api => {
-            resolve({specs: api.specs, hosts: suite.hosts})
+            resolve({specs: api.specs, hosts: suite.hosts, suiteKey: suiteKey})
           })
         })
     })
   }
 
-  pushTests (specs, hosts) {
+  pushTests (data) {
+    let specs = data.specs
+    let hosts = data.hosts
+    let suiteKey = data.suiteKey
+
     Object.values(specs)
       .filter(spec => !spec.skip)
       .forEach(spec => {
@@ -42,12 +53,11 @@ export default class TestService {
             }
           })
         let test = {
-          suiteKey: this.suiteKey,
+          suiteKey: suiteKey,
           completed: false,
           calls: calls
         }
-        console.log(test)
-        db.ref('tests').push(test)
+        firePush('tests', test)
       })
   }
 }
