@@ -10,7 +10,7 @@ export default function callApi (req) {
           statusCode: res.statusCode,
           statusText: res.statusText,
           headers: res.header,
-          body: res.body,
+          body: res.body || {},
           text: res.text
         })
       })

@@ -10,7 +10,7 @@
         <i class="fa fa-code"/> 비교
       </button>
     </div>
-    <TestList :suiteKey="suiteKey" :hosts="suite.hosts"/>
+    <TestList :suiteKey="suiteKey" :hosts="suite.hosts" @show/>
   </div>
 </template>
 
@@ -26,6 +26,7 @@ export default {
   components: {TestList},
   data () {
     return {
+      modal: false
     }
   },
   firebase () {

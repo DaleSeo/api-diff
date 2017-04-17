@@ -1,11 +1,12 @@
 <template>
-  <table class="table table-striped table-hover">
+  <table class="table table-hover">
     <caption>테스트 목록 ({{tests.length}})</caption>
     <thead>
       <tr>
         <th>호스트A</th>
         <th>호스트B</th>
         <th>상태</th>
+        <th>비교</th>
         <th>결과</th>
       </tr>
     </thead>
@@ -25,7 +26,7 @@ export default {
   components: {TestItem},
   firebase () {
     return {
-      tests: db.ref('tests').orderByChild('suiteKey').equalTo(this.suiteKey)
+      tests: db.ref('suites/' + this.suiteKey + '/tests')
     }
   }
 }

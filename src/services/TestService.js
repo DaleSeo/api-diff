@@ -14,10 +14,10 @@ export default class TestService {
   }
 
   removeSuite (suite) {
-    fireGet('tests', 'suiteKey', suite['.key'])
+    fireGet('suites/' + suite['.key'] + '/tests')
       .then(tests => {
         Object.keys(tests).forEach(key => {
-          fireRemove('tests/' + key)
+          fireRemove('suites/' + suite['.key'] + '/tests/' + key)
         })
         fireRemove('suites/' + suite['.key'])
       })
@@ -28,26 +28,23 @@ export default class TestService {
   }
 
   callSuite (suiteKey) {
-    db.ref('tests')
-      .orderByChild('suiteKey')
-      .equalTo(suiteKey)
+    console.log('# callSuite')
+    db.ref('suites/' + suiteKey + '/tests')
       .once('value')
       .then(tests => {
         tests.forEach(test => {
           callApi(test.val().reqA)
-            .then(res => db.ref('tests').child(test.key).child('resA').set(res))
-            .catch(err => db.ref('tests').child(test.key).child('errA').set(err))
+            .then(res => db.ref('suites/' + suiteKey + '/tests').child(test.key).child('resA').set(res))
+            .catch(err => db.ref('suites/' + suiteKey + '/tests').child(test.key).child('errA').set(err))
           callApi(test.val().reqB)
-            .then(res => db.ref('tests').child(test.key).child('resB').set(res))
-            .catch(err => db.ref('tests').child(test.key).child('errB').set(err))
+            .then(res => db.ref('suites/' + suiteKey + '/tests').child(test.key).child('resB').set(res))
+            .catch(err => db.ref('suites/' + suiteKey + '/tests').child(test.key).child('errB').set(err))
         })
       })
   }
 
   diffSuite (suiteKey) {
-    db.ref('tests')
-      .orderByChild('suiteKey')
-      .equalTo(suiteKey)
+    db.ref('suites/' + suiteKey + '/tests')
       .once('value')
       .then(tests => {
         tests.forEach(test => {
@@ -56,7 +53,7 @@ export default class TestService {
             headers: diff(test.val().resA.headers, test.val().resB.headers),
             body: diff(test.val().resA.body, test.val().resB.body)
           }
-          db.ref('tests').child(test.key).child('result').set(result)
+          db.ref('suites/' + suiteKey + '/tests').child(test.key).child('result').set(result)
         })
       })
   }
@@ -92,12 +89,8 @@ export default class TestService {
           url: hostB + spec.url,
           body: spec.body
         }
-        let test = {
-          suiteKey: suiteKey,
-          reqA,
-          reqB
-        }
-        firePush('tests', test)
+        let test = { reqA, reqB }
+        firePush('suites/' + suiteKey + '/tests', test)
       })
   }
 }
