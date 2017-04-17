@@ -17,8 +17,8 @@
       <tbody>
         <tr :key="suite['.key']" v-for="suite in suites">
           <td>{{suite.title}}</td>
-          <td>{{suite.hosts[0]}}</td>
-          <td>{{suite.hosts[1]}}</td>
+          <td>{{suite.hostA}}</td>
+          <td>{{suite.hostB}}</td>
           <td>{{suite.username}}</td>
           <td>{{suite.date | formatDate}}</td>
           <td>
@@ -44,13 +44,13 @@
         </div>
         <div class="form-group">
           <label for="hostA">호스트 A</label>
-          <select id="hostA" class="form-control" v-model="suite.hosts[0]">
+          <select id="hostA" class="form-control" v-model="suite.hostA">
             <option :value="host.baseUrl" v-for="host in hosts">{{host.baseUrl}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="hostB">호스트 B</label>
-          <select id="hostB" class="form-control" v-model="suite.hosts[1]">
+          <select id="hostB" class="form-control" v-model="suite.hostB">
             <option :value="host.baseUrl" v-for="host in hosts">{{host.baseUrl}}</option>
           </select>
         </div>
@@ -96,7 +96,8 @@ export default {
         username: '',
         apiKey: this.apiKey,
         completed: false,
-        hosts: ['', '']
+        hostA: '',
+        hostB: ''
       }
     },
     add () {

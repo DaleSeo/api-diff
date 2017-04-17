@@ -7,7 +7,12 @@ export function fireGet (key, filterKey, filterVal) {
       ref = ref.orderByChild(filterKey).equalTo(filterVal)
     }
     ref.once('value').then(data => {
-      resolve(data.toJSON())
+      let json = data.toJSON()
+      if (json) {
+        resolve(data.toJSON())
+      } else {
+        reject(new Error('No data found'))
+      }
     })
   })
 }

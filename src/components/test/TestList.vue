@@ -3,7 +3,10 @@
     <caption>테스트 목록 ({{tests.length}})</caption>
     <thead>
       <tr>
-        <th class="text-center" v-for="host in hosts">{{host}}</th>
+        <th>호스트A</th>
+        <th>호스트B</th>
+        <th>상태</th>
+        <th>결과</th>
       </tr>
     </thead>
     <tbody>
