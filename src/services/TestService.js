@@ -78,12 +78,12 @@ export default class TestService {
         let reqA = {
           method: spec.method,
           url: hostA + spec.url,
-          body: spec.body
+          body: spec.body || {}
         }
         let reqB = {
           method: spec.method,
           url: hostB + spec.url,
-          body: spec.body
+          body: spec.body || {}
         }
         let test = { reqA, reqB }
         firePush('suites/' + suiteKey + '/tests', test)

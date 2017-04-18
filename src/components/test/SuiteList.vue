@@ -84,7 +84,7 @@ export default {
   },
   firebase () {
     return {
-      suites: db.ref('suites'),
+      suites: db.ref('suites').orderByChild('apiKey').equalTo(this.apiKey),
       hosts: db.ref('apis/' + this.apiKey).child('hosts')
     }
   },
