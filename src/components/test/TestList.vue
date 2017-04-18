@@ -6,7 +6,6 @@
         <th>호스트A</th>
         <th>호스트B</th>
         <th>상태</th>
-        <th>비교</th>
         <th>결과</th>
       </tr>
     </thead>
