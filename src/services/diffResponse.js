@@ -25,7 +25,7 @@ function isValueEqual (valA, valB, excludes) {
     return false
   }
   if (Array.isArray(valA)) {
-    return isArrayEqual(excludes)
+    return isArrayEqual(valA, valB, excludes)
   }
 }
 
