@@ -48,11 +48,6 @@ export default class TestService {
       .once('value')
       .then(tests => {
         tests.forEach(test => {
-          // let result = {
-          //   status: diff(test.val().resA.statusCode, test.val().resB.statusCode),
-          //   headers: diff(test.val().resA.headers, test.val().resB.headers),
-          //   body: diff(test.val().resA.body, test.val().resB.body)
-          // }
           let result = diffResponse(test.val().resA, test.val().resB)
           db.ref('suites/' + suiteKey + '/tests').child(test.key).child('result').set(result)
         })

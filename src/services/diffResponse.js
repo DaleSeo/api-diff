@@ -3,8 +3,8 @@ import Equaler from './Equaler'
 export default function diffResponse (resA, resB, options) {
   return {
     statusEqual: diffStatus(resA.statusCode, resB.statusCode),
-    headersEqual: diffHeaders(resA.headers, resB.headers, options.headersExclusions),
-    bodyEqual: diffBody(resA.body, resB.body, options.bodyExclusions)
+    headersEqual: diffHeaders(resA.headers, resB.headers, options && options.headersExclusions),
+    bodyEqual: diffBody(resA.body, resB.body, options && options.bodyExclusions)
   }
 }
 

@@ -36,7 +36,7 @@ export default class Equaler {
       return false
     }
     for (let key in objA) {
-      if (this.exclusions.includes(key)) {
+      if (this.exclusions && this.exclusions.includes(key)) {
         continue
       }
       if (!_.has(objB, key)) {
