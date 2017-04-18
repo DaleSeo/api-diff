@@ -14,10 +14,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-body {
-  font-family: 'Nanum Gothic', sans-serif;
-}
-</style>
