@@ -1,6 +1,6 @@
 import { fireGet, firePush, fireRemove } from '../../src/services/fireUtils'
 import callApi from './callApi'
-import diffResopnse from './diffResopnse'
+import diffResponse from './diffResponse'
 
 import db from './database'
 

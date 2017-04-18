@@ -27,13 +27,14 @@ function isValueEqual (valA, valB, excludes) {
   if (Array.isArray(valA)) {
     return isArrayEqual(valA, valB, excludes)
   }
+
 }
 
 function isArrayEqual (arrA, arrB, excludes) {
   if (arrA.length !== arrB.length) {
     return false
   }
-  for (i in arrA) {
+  for (let i in arrA) {
     if (!isValueEqual(arrA[i], arrB[i], excludes)) {
       return false
     }
