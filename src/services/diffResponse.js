@@ -1,10 +1,10 @@
-import _ from 'lodash'
+import Equaler from './Equaler'
 
 export default function diffResponse (resA, resB, options) {
   return {
-    status: diffStatus(resA.statusCode, resB.statusCode),
-    headers: diffHeaders(resA.headers, resB.headers, options.excludeHeaders),
-    body: diffBody(resA.headers, resB.headers, options.excludeBody)
+    statusEqual: diffStatus(resA.statusCode, resB.statusCode),
+    headersEqual: diffHeaders(resA.headers, resB.headers, options.headersExclusions),
+    bodyEqual: diffBody(resA.body, resB.body, options.bodyExclusions)
   }
 }
 
@@ -12,32 +12,10 @@ function diffStatus (statusA, statusB) {
   return statusA === statusB
 }
 
-function diffHeaders (headersA, headersB, excludes) {
-  return _.isEqual(headersA, headersB)
+function diffHeaders (headersA, headersB, exclusions) {
+  return new Equaler(exclusions).isEqual(headersA, headersB)
 }
 
-function diffBody (bodyA, bodyB, excludes) {
-  return _.isEqual(bodyA, bodyB)
-}
-
-function isValueEqual (valA, valB, excludes) {
-  if (typeof valA !== typeof valB) {
-    return false
-  }
-  if (Array.isArray(valA)) {
-    return isArrayEqual(valA, valB, excludes)
-  }
-
-}
-
-function isArrayEqual (arrA, arrB, excludes) {
-  if (arrA.length !== arrB.length) {
-    return false
-  }
-  for (let i in arrA) {
-    if (!isValueEqual(arrA[i], arrB[i], excludes)) {
-      return false
-    }
-  }
-  return true
+function diffBody (bodyA, bodyB, exclusions) {
+  return new Equaler(exclusions).isEqual(bodyA, bodyB)
 }
