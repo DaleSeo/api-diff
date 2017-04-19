@@ -12,7 +12,7 @@ export default class TestService {
   }
 
   loadSuite (suiteKey) {
-    this.readSpecsAndHosts(suiteKey)
+    this.readApisAndHosts(suiteKey)
       .then(this.pushTests)
   }
 
@@ -57,25 +57,25 @@ export default class TestService {
       })
   }
 
-  readSpecsAndHosts (suiteKey) {
+  readApisAndHosts (suiteKey) {
     return new Promise((resolve, reject) => {
       fireGet('suites/' + suiteKey)
         .then(suite => {
           fireGet('apis/' + suite.apiKey)
           .then(api => {
-            resolve({specs: api.specs, hostA: suite.hostA, hostB: suite.hostB, suiteKey: suiteKey})
+            resolve({apis: api.apis, hostA: suite.hostA, hostB: suite.hostB, suiteKey: suiteKey})
           })
         })
     })
   }
 
   pushTests (data) {
-    let specs = data.specs
+    let apis = data.apis
     let hostA = data.hostA
     let hostB = data.hostB
     let suiteKey = data.suiteKey
 
-    Object.values(specs)
+    Object.values(apis)
       .filter(spec => !spec.skip)
       .forEach(spec => {
         let reqA = {

@@ -1,7 +1,7 @@
 import json from './ec.json'
 import db from '../services/database'
 
-let specRef = db.ref('apis/-KhQ6MTyGDA-W1CaALev/specs')
+let specRef = db.ref('services/-KhQ6MTyGDA-W1CaALev/apis')
 
 specRef.remove()
   .then(_ => Promise.all(

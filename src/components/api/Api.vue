@@ -42,7 +42,7 @@ export default {
   props: ['id'],
   firebase () {
     return {
-      apis: db.ref('apis/' + this.id).child('specs')
+      apis: db.ref('services/' + this.id).child('apis')
     }
   },
   data () {

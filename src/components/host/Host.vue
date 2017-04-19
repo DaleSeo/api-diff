@@ -34,7 +34,7 @@ export default {
   props: ['id'],
   firebase () {
     return {
-      hosts: db.ref('apis/' + this.id).child('hosts')
+      hosts: db.ref('services/' + this.id).child('hosts')
     }
   },
   data () {

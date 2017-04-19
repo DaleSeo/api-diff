@@ -9,7 +9,7 @@
         <router-link
           class="list-group-item"
           :to="`/services/${service['.key']}`"
-          :key="service['.key']" 
+          :key="service['.key']"
           v-for="service in services">
           <div class="text-center"><strong>{{service.title}}</strong></div>
         </router-link>
@@ -40,7 +40,7 @@ export default {
   },
   firebase() {
     return {
-      services: db.ref('apis')
+      services: db.ref('services')
     }
   },
   methods: {
