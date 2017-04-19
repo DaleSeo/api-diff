@@ -21,11 +21,11 @@ import TestItem from './TestItem.vue'
 import db from '../../services/database'
 
 export default {
-  props: ['suiteKey', 'hosts'],
+  props: ['id'],
   components: {TestItem},
   firebase () {
     return {
-      tests: db.ref('suites/' + this.suiteKey + '/tests')
+      tests: db.ref('suites/' + this.id + '/tests')
     }
   }
 }

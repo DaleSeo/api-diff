@@ -7,15 +7,15 @@ Vue.use(VueRouter)
 Vue.use(VueFire)
 
 import Index from './components/Index.vue'
-import ApiTest from './components/test/ApiTest.vue'
-import Suite from './components/test/Suite.vue'
+import Service from './components/service/Service.vue'
+import SuiteDetail from './components/suite/SuiteDetail.vue'
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {path: '/', component: Index},
-    {path: '/test/:apiKey', component: ApiTest, props: true},
-    {path: '/suites/:suiteKey', component: Suite, props: true}
+    {path: '/services/:id', component: Service, props: true},
+    {path: '/suites/:id', component: SuiteDetail, props: true}
   ]
 })
 

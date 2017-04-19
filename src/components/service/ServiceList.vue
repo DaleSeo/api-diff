@@ -6,9 +6,13 @@
         <button class="btn btn-xs btn-primary pull-right" @click="showForm"><i class="fa fa-plus"/></button>
       </div>
       <ul class="list-group">
-        <button class="list-group-item" @click="pick(service['.key'])" v-for="service in services">
+        <router-link
+          class="list-group-item"
+          :to="`/services/${service['.key']}`"
+          :key="service['.key']" 
+          v-for="service in services">
           <div class="text-center"><strong>{{service.title}}</strong></div>
-        </button>
+        </router-link>
       </ul>
     </div>
     <form @submit.prevent="add(newService)" v-if="form">
@@ -42,9 +46,6 @@ export default {
   methods: {
     showForm () {
       this.form = true
-    },
-    pick (id) {
-      this.$emit('pick', id)
     },
     add (service) {
       console.log('# add')
