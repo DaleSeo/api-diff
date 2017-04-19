@@ -34,7 +34,7 @@ export default {
       return {
         date: null,
         title: '',
-        apiKey: this.apiKey,
+        apiKey: this.id,
         completed: false,
         hostA: '',
         hostB: ''
@@ -44,10 +44,6 @@ export default {
       console.log('# add')
       testService.createSuite(this.suite)
       this.suite = this.getInitialSuite()
-    },
-    del (suite) {
-      console.log('# del')
-      testService.removeSuite(suite)
     }
   }
 }

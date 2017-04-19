@@ -9,21 +9,24 @@ export default class TestService {
   createSuite (suite) {
     suite.date = new Date().getTime()
     firePush('suites', suite)
-      .then(this.readSpecsAndHosts)
+  }
+
+  loadSuite (suiteKey) {
+    this.readSpecsAndHosts(suiteKey)
       .then(this.pushTests)
   }
 
-  removeSuite (suite) {
-    fireGet('suites/' + suite['.key'] + '/tests')
+  removeSuite (suiteKey) {
+    fireGet('suites/' + suiteKey + '/tests')
       .then(tests => {
         Object.keys(tests).forEach(key => {
-          fireRemove('suites/' + suite['.key'] + '/tests/' + key)
+          fireRemove('suites/' + suiteKey + '/tests/' + key)
         })
-        fireRemove('suites/' + suite['.key'])
+        fireRemove('suites/' + suiteKey)
       })
       .catch(err => {
         console.error(err)
-        fireRemove('suites/' + suite['.key'])
+        fireRemove('suites/' + suiteKey)
       })
   }
 

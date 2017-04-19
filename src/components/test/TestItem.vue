@@ -2,7 +2,7 @@
   <tr :class="{active: active}">
     <td>
       <span class="label" :class="className(test.reqA.method)">{{test.reqA.method}}</span>
-      &nbsp;<em>{{test.reqA.url}}</em>
+      &nbsp;<em>{{test.reqA.url.slice(0, 50)}}</em>
       <pre v-show="active && test.reqA.body" v-text="test.reqA.body"/>
       <div v-if="active && test.resA">
         <hr/>
@@ -12,7 +12,7 @@
     </td>
     <td>
       <span class="label" :class="className(test.reqB.method)">{{test.reqB.method}}</span>
-      &nbsp;<em>{{test.reqB.url}}</em>
+      &nbsp;<em>{{test.reqB.url.slice(0, 50)}}</em>
       <pre v-show="active && test.reqB.body" v-text="test.reqB.body"/>
       <div v-if="active && test.resB">
         <hr/>
@@ -42,14 +42,14 @@ export default {
   computed: {
     status() {
       if (this.test.result) {
-        return '비교 완료'
+        return '검증'
       }
 
       if (this.test.resA || this.test.errA) {
-        return '호출 완료'
+        return '호출'
       }
 
-      return '준비'
+      return '적재'
     }
   },
   data () {

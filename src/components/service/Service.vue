@@ -7,7 +7,7 @@
         <ul class="nav nav-pills nav-stacked">
           <li :class="{active: tab === 'host'}" @click="tab = 'host'"><a href="#host">호스트</a></li>
           <li :class="{active: tab === 'api'}" @click="tab = 'api'"><a href="#api">API</a></li>
-          <li :class="{active: tab === 'suite'}" @click="tab = 'suite'"><a href="#suite">테스트</a></li>
+          <li :class="{active: tab === 'suite'}" @click="tab = 'suite'"><a href="#suite">검증</a></li>
         </ul>
         <br/>
       </div>
