@@ -1,14 +1,27 @@
 <template>
   <div class="container">
-    <ApiList/>
+    <Service v-if="id" :id="id"/>
+    <ServiceList v-else @pick="pick"/>
   </div>
 </template>
 
 <script>
-import ApiList from './ApiList.vue'
+import ServiceList from './service/ServiceList.vue'
+import Service from './service/Service.vue'
 
 export default {
-  components: {ApiList}
+  components: {ServiceList, Service},
+  data () {
+    return {
+      id: ''
+    }
+  },
+  methods: {
+    pick (id) {
+      console.log('#pick:', id)
+      this.id = id
+    }
+  }
 }
 </script>
 
