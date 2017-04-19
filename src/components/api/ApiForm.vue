@@ -3,16 +3,16 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>규격 상세</strong>
-        <small>({{spec['.key']}})</small>
+        <small>({{api['.key']}})</small>
       </div><!-- panel-heading -->
       <div class="panel-body">
         <div class="form-group">
           <label for="title">이름</label>
-          <input id="title" type="text" class="form-control" v-model="spec.title"/>
+          <input id="title" type="text" class="form-control" v-model="api.title"/>
         </div>
         <div class="form-group">
           <label for="method">메소드</label>
-          <select id="method" class="form-control" v-model="spec.method">
+          <select id="method" class="form-control" v-model="api.method">
             <option>GET</option>
             <option>POST</option>
             <option>PUT</option>
@@ -21,23 +21,23 @@
         </div>
         <div class="form-group">
           <label for="url">패스</label>
-          <input id="url" type="text" class="form-control" v-model.lazy="spec.url"/>
+          <input id="url" type="text" class="form-control" v-model.lazy="api.url"/>
         </div>
         <div class="form-group">
           <label for="body">바디</label>
-          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model.lazy="spec.text"/>
+          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model.lazy="api.text"/>
         </div>
         <div class="form-group">
           <label for="description">설명</label>
-          <input id="description" class="form-control" placeholder="" v-model.lazy="spec.description"/>
+          <input id="description" class="form-control" placeholder="" v-model.lazy="api.description"/>
         </div>
         <div class="form-group">
           <label for="exclusion">비교 예외 항목</label>
-          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model.lazy="spec.exclusion"/>
+          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model.lazy="api.exclusion"/>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" v-model="spec.skip">검증 생략
+            <input type="checkbox" v-model="api.skip">검증 생략
           </label>
         </div>
       </div><!-- panel-body -->
@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  props: ['spec'],
+  props: ['api'],
   methods: {
     modify () {
       this.$emit('modify')

@@ -1,16 +1,15 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>규격 목록</strong>
-      <small>({{specs.length}})</small>
+      <strong>API 목록</strong> <small>({{apis.length}})</small>
       <button class="btn btn-xs btn-primary pull-right" @click="create"><i class="fa fa-pencil-square-o"/> 등록</button>
     </div>
     <ul class="list-group">
-      <SpecItem
-        v-for="spec in specs"
-        :key="spec['.key']"
-        :spec="spec"
-        :activeSpec="activeSpec"
+      <ApiItem
+        v-for="api in apis"
+        :key="api['.key']"
+        :api="api"
+        :activeApi="activeApi"
         @detail="detail"
       />
     </ul>
@@ -18,17 +17,17 @@
 </template>
 
 <script>
-import SpecItem from './SpecItem.vue'
+import ApiItem from './ApiItem.vue'
 
 export default {
-  props: ['specs', 'activeSpec'],
-  components: {SpecItem},
+  props: ['apis', 'activeApi'],
+  components: {ApiItem},
   methods: {
     create () {
       this.$emit('create')
     },
-    detail (spec) {
-      this.$emit('detail', spec)
+    detail (api) {
+      this.$emit('detail', api)
     }
   }
 }

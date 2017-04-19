@@ -44,7 +44,6 @@ export default {
       this.form = true
     },
     pick (id) {
-      console.log('#pick:', id)
       this.$emit('pick', id)
     },
     add (service) {

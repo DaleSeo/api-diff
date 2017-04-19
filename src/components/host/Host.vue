@@ -1,7 +1,7 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      Hosts
+      <strong>호스트 목록</strong> <small>({{hosts.length}})</small>
     </div>
     <ul class="list-group">
       <button class="list-group-item" v-for="host in hosts">
@@ -31,10 +31,10 @@
 import db from '../../services/database'
 
 export default {
-  props: ['apiKey'],
+  props: ['id'],
   firebase () {
     return {
-      hosts: db.ref('apis/' + this.apiKey).child('hosts')
+      hosts: db.ref('apis/' + this.id).child('hosts')
     }
   },
   data () {

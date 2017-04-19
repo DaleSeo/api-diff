@@ -1,0 +1,52 @@
+<template>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>테스트 스위트 목록</strong> <small>({{suites.length}})</small>
+      <button class="btn btn-xs btn-primary pull-right" @click="showForm" v-if="!form"><i class="fa fa-plus"/></button>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>호스트</th>
+          <th>요청 시간</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr :key="suite['.key']" v-for="suite in suites">
+          <td>{{suite.title}}</td>
+          <td>
+            {{suite.hostA}}
+            <br>
+            {{suite.hostB}}
+          </td>
+          <td>{{suite.date | formatDate}}</td>
+          <td>
+            <router-link class="btn btn-primary btn-xs" :to="`/suites/${suite['.key']}`">
+              <i class="fa fa-list"/>
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import moment from 'moment'
+
+export default {
+  props: ['suites', 'form'],
+  filters: {
+    formatDate (date) {
+      return moment(date).format('YYYY/MM/DD hh:mm:ss a')
+    }
+  },
+  methods: {
+    showForm () {
+      this.$emit('showForm')
+    }
+  }
+}
+</script>

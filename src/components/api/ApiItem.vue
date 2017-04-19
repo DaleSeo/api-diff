@@ -1,20 +1,20 @@
 <template>
   <button class="list-group-item" :class="{active: active}" @click="detail">
-    <h4 v-show="active">{{spec.title}}</h4>
+    <h4 v-show="active">{{api.title}}</h4>
     <p class="list-group-item-heading">
-      <span class="label" :class="className(spec.method)">{{spec.method}}</span>
-      &nbsp;<em>{{spec.url}}</em>
+      <span class="label" :class="className(api.method)">{{api.method}}</span>
+      &nbsp;<em>{{api.url}}</em>
     </p>
-    <pre v-show="active && spec.body" v-text="spec.body"/>
+    <pre v-show="active && api.body" v-text="api.body"/>
   </button>
 </template>
 
 <script>
 export default {
-  props: ['spec', 'activeSpec'],
+  props: ['api', 'activeApi'],
   computed: {
     active () {
-      return this.spec['.key'] === this.activeSpec['.key']
+      return this.api['.key'] === this.activeApi['.key']
     }
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       }
     },
     detail () {
-      this.$emit('detail', this.spec)
+      this.$emit('detail', this.api)
     }
   }
 }

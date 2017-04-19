@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <div class="col-md-7">
-      <SpecList
-        :specs="specs" :activeSpec="activeSpec"
+      <ApiList
+        :apis="apis" :activeApi="activeApi"
         @detail="detail" @create="create"
       />
     </div>
     <div class="col-md-5">
-      <SpecForm v-if="activeSpec['.key']"
-        :spec="activeSpec"
+      <ApiForm v-if="activeApi['.key']"
+        :api="activeApi"
         @reset="reset" @modify="modify" @remove="remove"
       />
     </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import SpecList from './SpecList.vue'
-import SpecForm from './SpecForm.vue'
+import ApiList from './ApiList.vue'
+import ApiForm from './ApiForm.vue'
 
 import db from '../../services/database'
 
 function getInitialData() {
   return {
-    activeSpec: {
+    activeApi: {
       '.key': '',
       title: '',
       method: 'GET',
@@ -38,11 +38,11 @@ function getInitialData() {
 }
 
 export default {
-  components: {SpecList, SpecForm},
-  props: ['apiKey'],
+  components: {ApiList, ApiForm},
+  props: ['id'],
   firebase () {
     return {
-      specs: db.ref('apis/' + this.apiKey).child('specs')
+      apis: db.ref('apis/' + this.id).child('specs')
     }
   },
   data () {
@@ -53,33 +53,33 @@ export default {
       console.log('#reset')
       Object.assign(this.$data, getInitialData())
     },
-    detail (spec) {
+    detail (api) {
       console.log('#detail')
-      this.activeSpec = Object.assign({}, spec)
+      this.activeApi = Object.assign({}, api)
     },
     create () {
       console.log('#create')
       this.reset()
-      this.activeSpec['.key'] = this.$firebaseRefs.specs.push().key
+      this.activeApi['.key'] = this.$firebaseRefs.apis.push().key
     },
     modify () {
       console.log('#modify')
-      let spec = Object.assign({}, this.activeSpec)
-      delete spec['.key']
-      if (spec.text.trim()) {
+      let api = Object.assign({}, this.activeApi)
+      delete api['.key']
+      if (api.text.trim()) {
         try {
-          spec.body = JSON.parse(spec.text)
+          api.body = JSON.parse(api.text)
         } catch (err) {
           return window.alert(err)
         }
       } else {
-        spec.body = ''
+        api.body = ''
       }
-      this.$firebaseRefs.specs.child(this.activeSpec['.key']).set(spec)
+      this.$firebaseRefs.apis.child(this.activeApi['.key']).set(api)
     },
     remove () {
       console.log('#remove')
-      this.$firebaseRefs.specs.child(this.activeSpec['.key']).remove()
+      this.$firebaseRefs.apis.child(this.activeApi['.key']).remove()
       this.reset()
     }
   }
