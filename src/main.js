@@ -15,7 +15,7 @@ const router = new VueRouter({
   routes: [
     {path: '/', component: Index},
     {path: '/services/:id', component: Service, props: true},
-    {path: '/suites/:id', component: SuiteDetail, props: true}
+    {path: '/services/:serviceId/suites/:suiteId', component: SuiteDetail, props: true}
   ]
 })
 

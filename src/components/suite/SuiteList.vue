@@ -23,7 +23,7 @@
           </td>
           <td>{{suite.date | formatDate}}</td>
           <td>
-            <router-link class="btn btn-primary btn-xs" :to="`/suites/${suite['.key']}`">
+            <router-link class="btn btn-primary btn-xs" :to="`/services/${serviceId}/suites/${suite['.key']}`">
               <i class="fa fa-list"/>
             </router-link>
           </td>
@@ -37,10 +37,10 @@
 import moment from 'moment'
 
 export default {
-  props: ['suites', 'form'],
+  props: ['suites', 'serviceId', 'form'],
   filters: {
     formatDate (date) {
-      return moment(date).format('YYYY/MM/DD hh:mm:ss a')
+      return moment(date).format('YY/MM/DD HH:mm:ss')
     }
   },
   methods: {

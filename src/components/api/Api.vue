@@ -27,7 +27,7 @@ function getInitialData() {
       '.key': '',
       title: '',
       method: 'GET',
-      url: '',
+      path: '',
       text: '',
       body: '',
       description: '',

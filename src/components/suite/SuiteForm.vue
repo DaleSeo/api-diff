@@ -8,13 +8,13 @@
       <div class="form-group">
         <label for="hostA">호스트 A</label>
         <select id="hostA" class="form-control" v-model="suite.hostA">
-          <option :value="host.baseUrl" v-for="host in hosts">{{host.title}}::{{host.baseUrl}}</option>
+          <option :value="host.baseUrl" v-for="host in hosts">[{{host.title}}] {{host.baseUrl}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="hostB">호스트 B</label>
         <select id="hostB" class="form-control" v-model="suite.hostB">
-          <option :value="host.baseUrl" v-for="host in hosts">{{host.title}}::{{host.baseUrl}}</option>
+          <option :value="host.baseUrl" v-for="host in hosts">[{{host.title}}] {{host.baseUrl}}</option>
         </select>
       </div>
       <div class="form-group text-right">
@@ -26,8 +26,15 @@
 </template>
 
 <script>
+import db from '../../services/database'
+
 export default {
-  props: ['suite', 'hosts', 'form'],
+  props: ['suite', 'serviceId', 'form'],
+  firebase () {
+    return {
+      hosts: db.ref('services/' + this.serviceId).child('hosts')
+    }
+  },
   methods: {
     add () {
       this.$emit('add')

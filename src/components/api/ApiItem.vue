@@ -3,7 +3,7 @@
     <h4 v-show="active">{{api.title}}</h4>
     <p class="list-group-item-heading">
       <span class="label" :class="className(api.method)">{{api.method}}</span>
-      &nbsp;<em>{{api.url.slice(0, 50)}}</em>
+      &nbsp;<em>{{api.path.slice(0, 50)}}</em>
     </p>
     <pre v-show="active && api.body" v-text="api.body"/>
   </button>

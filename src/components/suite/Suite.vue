@@ -1,7 +1,7 @@
 <template>
   <div>
-    <SuiteList :suites="suites" :form="form" @showForm="form = true"/>
-    <SuiteForm :suite="suite" :hosts="hosts" @add="add" @hideForm="form = false" v-if="form"/>
+    <SuiteList :suites="suites" :serviceId="id" :form="form" @showForm="form = true"/>
+    <SuiteForm :suite="suite" :serviceId="id" @add="add" @hideForm="form = false" v-if="form"/>
   </div>
 </template>
 
@@ -10,40 +10,45 @@ import SuiteList from './SuiteList.vue'
 import SuiteForm from './SuiteForm.vue'
 
 import db from '../../services/database'
+import SuiteService from '../../services/SuiteService'
 
-import TestService from '../../services/TestService'
-const testService = new TestService()
+let suiteService
 
 export default {
   props: ['id'],
   components: {SuiteList, SuiteForm},
+  created () {
+    suiteService = new SuiteService(this.id)
+  },
   data () {
     return {
+      suiteService: null,
       form: false,
-      suite: this.getInitialSuite()
+      suite: this.initSuite()
     }
   },
   firebase () {
     return {
-      suites: db.ref('suites').orderByChild('apiKey').equalTo(this.id),
-      hosts: db.ref('apis/' + this.id).child('hosts')
+      suites: db.ref(`services/${this.id}/suites`)
     }
   },
   methods: {
-    getInitialSuite () {
+    initSuite () {
       return {
         date: null,
         title: '',
-        apiKey: this.id,
         completed: false,
         hostA: '',
-        hostB: ''
+        hostB: '',
+        apis: []
       }
     },
     add () {
       console.log('# add')
-      testService.createSuite(this.suite)
-      this.suite = this.getInitialSuite()
+      suiteService.create(this.suite)
+        .then(key => console.log(key))
+        .catch(err => console.error(err))
+      this.suite = this.initSuite()
     }
   }
 }

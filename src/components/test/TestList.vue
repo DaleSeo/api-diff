@@ -25,7 +25,7 @@ export default {
   components: {TestItem},
   firebase () {
     return {
-      tests: db.ref('suites/' + this.id + '/tests')
+      tests: db.ref('tests/').child(this.id)
     }
   }
 }

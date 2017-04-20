@@ -20,8 +20,8 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="url">패스</label>
-          <input id="url" type="text" class="form-control" v-model.lazy="api.url"/>
+          <label for="path">패스</label>
+          <input id="path" type="text" class="form-control" v-model.lazy="api.path"/>
         </div>
         <div class="form-group">
           <label for="body">바디</label>

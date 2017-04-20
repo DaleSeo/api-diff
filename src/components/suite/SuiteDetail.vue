@@ -19,20 +19,27 @@
         <i class="fa fa-trash"/> 삭제
       </button>
     </div>
-    <Test :id="id" :hostA="suite.hostA" :hostB="suite.hostB"/>
+    <Test :id="suiteId" :hostA="suite.hostA" :hostB="suite.hostB"/>
   </div>
 </template>
 
 <script>
 import Test from '../test/Test.vue'
+
 import db from '../../services/database'
+import SuiteService from '../../services/SuiteService'
+
+let suiteService
 
 import TestService from '../../services/TestService'
 const testService = new TestService()
 
 export default {
-  props: ['id'],
+  props: ['serviceId', 'suiteId'],
   components: {Test},
+  created () {
+    suiteService = new SuiteService(this.serviceId)
+  },
   data () {
     return {
       modal: false
@@ -41,7 +48,7 @@ export default {
   firebase () {
     return {
       suite: {
-        source: db.ref('suites/' + this.id),
+        source: db.ref(`services/${this.serviceId}/suites/${this.suiteId}`),
         asObject: true
       }
     }
@@ -52,19 +59,19 @@ export default {
     },
     load () {
       console.log('# load')
-      testService.loadSuite(this.id)
+      testService.loadSuite(this.suiteId)
     },
     call () {
       console.log('# call')
-      testService.callSuite(this.id)
+      testService.callSuite(this.suiteId)
     },
     diff () {
       console.log('# diff')
-      testService.diffSuite(this.id)
+      testService.diffSuite(this.suiteId)
     },
     del () {
-      console.log('# del')
-      testService.removeSuite(this.id)
+      console.log('# del:', this.suiteId)
+      suiteService.remove(this.suiteId)
       window.history.back()
     }
   }
