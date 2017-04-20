@@ -23,13 +23,6 @@
     <td>
       {{status}}
     </td>
-    <td>
-      <span v-if="test.resA || test.resB">
-        <button class="btn btn-primary btn-sm" @click="showDiff"><i class="fa fa-window-restore"/></button>
-        <ResDiff :resA="test.resA" :resB="test.resB" :result="test.result" :show="diff" v-if="diff" @close="hideDiff"/>
-        <div v-if="diff" class="modal-backdrop fade in"></div>
-      </span>
-    </td>
   </tr>
 </template>
 

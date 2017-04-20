@@ -10,11 +10,10 @@
           <th>이름</th>
           <th>호스트</th>
           <th>요청 시간</th>
-          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
-        <tr :key="suite['.key']" v-for="suite in suites">
+        <tr :key="suite['.key']" v-for="suite in suites" @click="pick(suite['.key'])">
           <td>{{suite.title}}</td>
           <td>
             {{suite.hostA}}
@@ -22,11 +21,6 @@
             {{suite.hostB}}
           </td>
           <td>{{suite.date | formatDate}}</td>
-          <td>
-            <router-link class="btn btn-primary btn-xs" :to="`/services/${serviceId}/suites/${suite['.key']}`">
-              <i class="fa fa-list"/>
-            </router-link>
-          </td>
         </tr>
       </tbody>
     </table>
@@ -46,6 +40,9 @@ export default {
   methods: {
     showForm () {
       this.$emit('showForm')
+    },
+    pick (key) {
+      window.location.href = `/services/${this.serviceId}/suites/${key}`
     }
   }
 }

@@ -1,17 +1,21 @@
 <template>
   <div class="container">
-    <h3>테스트 상세</h3>
+    <h3>
+      <strong>테스트 상세</strong>
+      <button class="btn btn-primary btn-sm pull-right" @click="back"><i class="fa fa-list"></i></button>
+    </h3>
     <hr/>
+    <TabSum :result="test.result" v-if="test.result"/>
+    <br/>
     <div clsss="row">
       <ul class="nav nav-tabs">
-        <li :class="{active: tab === 'sum'}" @click="tab = 'sum'"><a href="#sum">요약</a></li>
-        <li :class="{active: tab === 'req'}" @click="tab = 'req'"><a href="#req">요청</a></li>
-        <li :class="{active: tab === 'res'}" @click="tab = 'res'"><a href="#res">응답</a></li>
+        <li :class="{active: tab === 'req'}" @click="tab = 'req'"><a href="#req"><b>요청</b></a></li>
+        <li :class="{active: tab === 'res'}" @click="tab = 'res'"><a href="#res"><b>응답</b></a></li>
       </ul>
     </div>
-    <TabSum :result="test.result" v-if="tab === 'sum'"/>
-    <TabReq :reqA="test.reqA" :reqB="test.reqB" v-if="tab === 'req'"/>
-    <TabRes :resA="test.resA" :resB="test.resB" v-if="tab === 'res'"/>
+    <br/>
+    <TabReq :reqA="test.reqA" :reqB="test.reqB" v-if="test.reqA && tab === 'req'"/>
+    <TabRes :resA="test.resA" :resB="test.resB" v-if="test.reqB && tab === 'res'"/>
   </div>
 </template>
 
@@ -27,7 +31,7 @@ export default {
   components: {TabSum, TabReq, TabRes},
   data () {
     return {
-      tab: 'sum'
+      tab: 'res'
     }
   },
   firebase () {
@@ -36,6 +40,11 @@ export default {
         source: db.ref(`tests/${this.suiteId}/${this.testId}`),
         asObject: true
       }
+    }
+  },
+  methods: {
+    back () {
+      window.history.back()
     }
   }
 }
