@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TestList :id="id"/>
+    <TestList :suiteId="suiteId"/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import TestList from './TestList.vue'
 
 export default {
-  props: ['id', 'hostA', 'hostB'],
+  props: ['suiteId', 'hostA', 'hostB'],
   components: {TestList}
 }
 </script>

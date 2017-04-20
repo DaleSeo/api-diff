@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <TestItem :test="test" :key="test['.key']" v-for="test in tests"/>
+      <TestItem :test="test" :suiteId="suiteId" :key="test['.key']" v-for="test in tests"/>
     </tbody>
   </table>
 </template>
@@ -21,11 +21,11 @@ import TestItem from './TestItem.vue'
 import db from '../../services/database'
 
 export default {
-  props: ['id'],
+  props: ['suiteId'],
   components: {TestItem},
   firebase () {
     return {
-      tests: db.ref('tests/').child(this.id)
+      tests: db.ref('tests/').child(this.suiteId)
     }
   }
 }

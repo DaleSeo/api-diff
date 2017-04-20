@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{active: active}">
+  <tr :class="{active: active}" @click="pick">
     <td>
       <span class="label" :class="className(test.reqA.method)">{{test.reqA.method}}</span>
       &nbsp;<em>{{test.reqA.url.slice(0, 50)}}</em>
@@ -37,7 +37,7 @@
 import ResDiff from './ResDiff.vue'
 
 export default {
-  props: ['test'],
+  props: ['test', 'suiteId'],
   components: { ResDiff },
   computed: {
     status() {
@@ -78,6 +78,9 @@ export default {
     hideDiff () {
       console.log('#hideDiff')
       this.diff = false
+    },
+    pick () {
+      window.location.href = `/tests/${this.suiteId}/${this.test['.key']}`
     }
   }
 }

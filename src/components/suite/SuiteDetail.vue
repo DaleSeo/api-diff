@@ -6,20 +6,20 @@
       <button class="btn btn-warning" @click="back">
         <i class="fa fa-list"/> 뒤로
       </button>
-      <button class="btn btn-primary" @click="populateTests">
+      <button class="btn btn-primary" @click="prepTests">
         <i class="fa fa-industry"/> 적재
       </button>
       <button class="btn btn-primary" @click="callTests">
         <i class="fa fa-play"/> 호출
       </button>
-      <button class="btn btn-primary" @click="diff">
+      <button class="btn btn-primary" @click="diffTests">
         <i class="fa fa-code"/> 검증
       </button>
       <button class="btn btn-danger" @click="del">
         <i class="fa fa-trash"/> 삭제
       </button>
     </div>
-    <Test :id="suiteId" :hostA="suite.hostA" :hostB="suite.hostB"/>
+    <Test :suiteId="suiteId" :hostA="suite.hostA" :hostB="suite.hostB"/>
   </div>
 </template>
 
@@ -28,17 +28,17 @@ import Test from '../test/Test.vue'
 
 import db from '../../services/database'
 import SuiteService from '../../services/SuiteService'
+import TestService from '../../services/TestService'
 
 let suiteService
-
-import TestService from '../../services/TestService'
-const testService = new TestService()
+let testService
 
 export default {
   props: ['serviceId', 'suiteId'],
   components: {Test},
   created () {
     suiteService = new SuiteService(this.serviceId)
+    testService = new TestService(this.suiteId)
   },
   data () {
     return {
@@ -48,7 +48,7 @@ export default {
   firebase () {
     return {
       suite: {
-        source: db.ref(`services/${this.serviceId}/suites/${this.suiteId}`),
+        source: db.ref(`tests/${this.serviceId}/${this.suiteId}`),
         asObject: true
       }
     }
@@ -57,21 +57,22 @@ export default {
     back () {
       window.history.back()
     },
-    populateTests () {
-      console.log('#populateTests')
-      suiteService.populateTests(this.suiteId)
+    prepTests () {
+      console.log('#prepTests')
+      suiteService.find(this.suiteId)
+        .then(suite => testService.prep(suite))
         .then(_ => console.log('Done!'))
         .catch(err => console.error(err))
     },
     callTests () {
       console.log('#callTests')
-      suiteService.callTests(this.suiteId)
+      testService.call()
         .then(_ => console.log('Done!'))
         .catch(err => console.error(err))
     },
-    diff () {
-      console.log('# diff')
-      testService.diffSuite(this.suiteId)
+    diffTests () {
+      console.log('#diffTests')
+      testService.diff()
     },
     del () {
       console.log('# del:', this.suiteId)

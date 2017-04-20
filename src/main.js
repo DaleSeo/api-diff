@@ -9,13 +9,15 @@ Vue.use(VueFire)
 import Index from './components/Index.vue'
 import Service from './components/service/Service.vue'
 import SuiteDetail from './components/suite/SuiteDetail.vue'
+import TestDetail from './components/test/TestDetail.vue'
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {path: '/', component: Index},
     {path: '/services/:id', component: Service, props: true},
-    {path: '/services/:serviceId/suites/:suiteId', component: SuiteDetail, props: true}
+    {path: '/services/:serviceId/suites/:suiteId', component: SuiteDetail, props: true},
+    {path: '/tests/:suiteId/:testId', component: TestDetail, props: true}
   ]
 })
 
