@@ -8,7 +8,7 @@ specRef.remove()
     json.apis.map(api => {
       return specRef.push({
         method: api.method,
-        url: api.path,
+        path: api.path,
         body: api.body || {},
         skip: api.skip,
         text: JSON.stringify(api.body, null, 2) || '',

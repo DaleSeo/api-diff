@@ -6,10 +6,10 @@
       <button class="btn btn-warning" @click="back">
         <i class="fa fa-list"/> 뒤로
       </button>
-      <button class="btn btn-primary" @click="load">
+      <button class="btn btn-primary" @click="populateTests">
         <i class="fa fa-industry"/> 적재
       </button>
-      <button class="btn btn-primary" @click="call">
+      <button class="btn btn-primary" @click="callTests">
         <i class="fa fa-play"/> 호출
       </button>
       <button class="btn btn-primary" @click="diff">
@@ -57,13 +57,17 @@ export default {
     back () {
       window.history.back()
     },
-    load () {
-      console.log('# load')
-      testService.loadSuite(this.suiteId)
+    populateTests () {
+      console.log('#populateTests')
+      suiteService.populateTests(this.suiteId)
+        .then(_ => console.log('Done!'))
+        .catch(err => console.error(err))
     },
-    call () {
-      console.log('# call')
-      testService.callSuite(this.suiteId)
+    callTests () {
+      console.log('#callTests')
+      suiteService.callTests(this.suiteId)
+        .then(_ => console.log('Done!'))
+        .catch(err => console.error(err))
     },
     diff () {
       console.log('# diff')
