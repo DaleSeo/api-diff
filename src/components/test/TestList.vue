@@ -9,7 +9,12 @@
       </tr>
     </thead>
     <tbody>
-      <TestItem :test="test" :suiteId="suiteId" :key="test['.key']" v-for="test in tests"/>
+      <TestItem
+        :test="test"
+        :suiteId="suiteId"
+        :key="test['.key']"
+        @pick="pick"
+        v-for="test in tests"/>
     </tbody>
   </table>
 </template>
@@ -25,6 +30,11 @@ export default {
   firebase () {
     return {
       tests: db.ref('tests/').child(this.suiteId)
+    }
+  },
+  methods: {
+    pick (test) {
+      this.$emit('pick', test)
     }
   }
 }

@@ -73,7 +73,8 @@ export default {
       this.diff = false
     },
     pick () {
-      window.location.href = `/tests/${this.suiteId}/${this.test['.key']}`
+      this.$emit('pick', this.test)
+      // window.location.href = `/tests/${this.suiteId}/$}`
     }
   }
 }

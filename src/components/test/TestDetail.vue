@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <h3>
-      <strong>테스트 상세</strong>
-      <button class="btn btn-primary btn-sm pull-right" @click="back"><i class="fa fa-list"></i></button>
-    </h3>
     <hr/>
     <TabSum :result="test.result" v-if="test.result"/>
     <br/>
@@ -27,24 +23,16 @@ import TabRes from './TabRes.vue'
 import db from '../../services/database'
 
 export default {
-  props: ['suiteId', 'testId'],
+  props: ['test', 'suiteId'],
   components: {TabSum, TabReq, TabRes},
   data () {
     return {
       tab: 'res'
     }
   },
-  firebase () {
-    return {
-      test: {
-        source: db.ref(`tests/${this.suiteId}/${this.testId}`),
-        asObject: true
-      }
-    }
-  },
   methods: {
-    back () {
-      window.history.back()
+    unpick () {
+      this.$emit('unpick')
     }
   }
 }
