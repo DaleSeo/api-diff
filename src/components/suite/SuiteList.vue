@@ -12,6 +12,7 @@
           <th class="text-center">호스트A</th>
           <th class="text-center">호스트B</th>
           <th class="text-center">일시</th>
+          <th class="text-center">상태</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{suite.hostA}}</td>
           <td>{{suite.hostB}}</td>
           <td>{{suite.date | formatDate}}</td>
+          <td>{{status(suite.summary)}}</td>
         </tr>
       </tbody>
     </table>
@@ -40,6 +42,15 @@ export default {
   methods: {
     showForm () {
       this.$emit('showForm')
+    },
+    status (summary) {
+      if (!summary) {
+        return "READY"
+      }
+      if (summary.numFail == 0) {
+        return "PASS"
+      }
+      return "FAIL"
     },
     pick (suiteId) {
       window.location.href = `/services/${this.serviceId}/suites/${suiteId}`

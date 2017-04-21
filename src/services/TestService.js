@@ -9,21 +9,45 @@ export default class TestService {
     this.testRef = db.ref('tests').child(suiteId)
   }
 
-  prep (suite) {
-    console.log('TestService#prep')
-    Object.values(suite.apis).forEach(api => {
-      let reqA = {
-        method: api.method,
-        url: suite.hostA + api.path,
-        body: api.body || {}
-      }
-      let reqB = {
-        method: api.method,
-        url: suite.hostB + api.path,
-        body: api.body || {}
-      }
-      this.testRef.push({ api, reqA, reqB })
+  initialize (suite) {
+    console.log('TestService#initialize')
+    console.log(suite)
+    suite.apis.forEach(api => {
+      console.log('api:', api)
+      console.log(this.testRef.toString())
+      console.log({
+        api,
+        hostA: suite.hostA,
+        hostB: suite.hostB,
+      })
+      this.testRef.push({
+        api,
+        hostA: suite.hostA,
+        hostB: suite.hostB,
+      })
     })
+  }
+
+  prep () {
+    console.log('TestService#prep')
+    return this.testRef
+      .once('value')
+      .then(tests => {
+        tests.forEach(test => {
+          let reqA = {
+            method: test.val().api.method,
+            url: test.val().hostA + test.val().api.path,
+            body: test.val().api.body || {}
+          }
+          let reqB = {
+            method: test.val().api.method,
+            url: test.val().hostB + test.val().api.path,
+            body: test.val().api.body || {}
+          }
+          this.testRef.child(test.key).child('reqA').set(reqA)
+          this.testRef.child(test.key).child('reqB').set(reqB)
+        })
+      })
   }
 
   call () {
@@ -51,6 +75,26 @@ export default class TestService {
           let result = diffResponse(test.val().resA, test.val().resB)
           this.testRef.child(test.key).child('result').set(result)
         })
+      })
+  }
+
+  aggregate () {
+    console.log('TestService#aggregate')
+    return this.testRef
+      .once('value')
+      .then(tests => {
+        let [numPass, numFail] = [0, 0]
+        tests.forEach(test => {
+          if (test.val().result
+            && test.val().result.statusEqual
+            && test.val().result.headersEqual
+            && test.val().result.bodyEqual) {
+            numPass++
+          } else {
+            numFail++
+          }
+        })
+        return {numPass, numFail}
       })
   }
 

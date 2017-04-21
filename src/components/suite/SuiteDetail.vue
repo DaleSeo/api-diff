@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h3>
-      <i class="fa fa-bar-chart"/> <b>{{suite.title}}</b>
+      <b>{{suite.title}}</b>
       <div class="btn-group pull-right">
         <button class="btn btn-sm btn-default" title="목록" @click="list">
           <i class="fa fa-list"/>
@@ -17,12 +17,19 @@
         <i class="fa fa-industry"/> 적재
       </button>
       <button class="btn btn-sm btn-success" @click="callTests">
-        <i class="fa fa-play"/> 호출
+        <i class="fa fa-spinner"/> 호출
       </button>
       <button class="btn btn-sm btn-info" @click="diffTests">
         <i class="fa fa-code"/> 비교
       </button>
+      <button class="btn btn-sm btn-primary" @click="aggregateTests">
+        <i class="fa fa-bar-chart"/> 집계
+      </button>
       버튼을 차례로 클릭하여 일괄 검증을 수행하십시오.
+      <span v-if="suite.summary" class="pull-right">
+        <span class="label label-primary">{{suite.summary.numPass}} passes</span>
+        <span class="label label-danger">{{suite.summary.numFail}} fails</span>
+      </span>
     </blockquote>
     <Test :suiteId="suiteId"/>
   </div>
@@ -66,8 +73,7 @@ export default {
     },
     prepTests () {
       console.log('#prepTests')
-      suiteService.find(this.suiteId)
-        .then(suite => testService.prep(suite))
+      testService.prep()
         .then(_ => console.log('Done!'))
         .catch(err => console.error(err))
     },
@@ -80,6 +86,13 @@ export default {
     diffTests () {
       console.log('#diffTests')
       testService.diff()
+    },
+    aggregateTests () {
+      console.log('#diffTests')
+      testService.aggregate()
+        .then(summary => suiteService.modify(this.suiteId, 'summary', summary))
+        .then(_ => console.log('Suite modified'))
+        .catch(err => console.error(err))
     },
     del () {
       console.log('#del:', this.suiteId)

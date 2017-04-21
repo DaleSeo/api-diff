@@ -7,8 +7,8 @@
     <p class="list-group-item-text pull-right">
       <b>{{status}}</b>
       <span v-if="status == '비교 완료'">
-        <button class="btn btn-sm btn-primary" v-if="hasPassed" @click="pick">PASS</button>
-        <button class="btn btn-sm btn-danger" v-else @click="pick">FAIL</button>
+        <button class="btn btn-xs btn-primary" v-if="hasPassed" @click="pick">PASS</button>
+        <button class="btn btn-xs btn-danger" v-else @click="pick">FAIL</button>
       </span>
     </p>
   </button>
@@ -28,7 +28,10 @@ export default {
       if (this.test.resA && this.test.resB) {
         return '호출 완료'
       }
-      return '적재 완료'
+      if (this.test.reqA && this.test.reqB) {
+        return '적재 완료'
+      }
+      return '준비'
     },
     hasPassed () {
       return this.test.result

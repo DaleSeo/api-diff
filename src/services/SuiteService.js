@@ -28,10 +28,20 @@ export default class SuiteService {
   }
 
   find (id) {
+    console.log('SuiteService#find')
     return this.suiteRef
       .child(id)
       .once('value')
       .then(snap => snap.val())
+  }
+
+  modify (id, key, value) {
+    console.log('SuiteService#modify')
+    console.log(id, key, value)
+    return this.suiteRef
+      .child(id)
+      .child(key)
+      .set(value)
   }
 
 }

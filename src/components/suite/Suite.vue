@@ -11,6 +11,7 @@ import SuiteForm from './SuiteForm.vue'
 
 import db from '../../services/database'
 import SuiteService from '../../services/SuiteService'
+import TestService from '../../services/TestService'
 
 let suiteService
 
@@ -47,7 +48,11 @@ export default {
       console.log('# add')
       console.log(this.suite)
       suiteService.create(this.suite)
-        .then(key => console.log(key))
+        .then(key => {
+          suiteService.find(key).then(suite =>
+            new TestService(key).initialize(suite)
+          )
+        })
         .catch(err => console.error(err))
       this.suite = this.initSuite()
     }
