@@ -1,19 +1,14 @@
 <template>
   <button class="list-group-item" :class="classStatus(status)" @click="toggle">
-    <p class="list-group-item-heading">
-      <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
-      &nbsp;<em>{{test.hostA}}{{test.api.path.slice(0, 50)}}</em>
-      <b>VS.</b>
-      <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
-      &nbsp;<em>{{test.hostB}}{{test.api.path.slice(0, 50)}}</em>
-    </p>
-    <p class="list-group-item-text pull-right">
+    <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
+    &nbsp;<em>{{test.api.path.slice(0, 50)}}</em>
+    <span class="pull-right">
       <b>{{status}}</b>
       <span v-if="status == '비교 완료'">
         <button class="btn btn-xs btn-primary" v-if="hasPassed" @click="pick">PASS</button>
         <button class="btn btn-xs btn-danger" v-else @click="pick">FAIL</button>
       </span>
-    </p>
+    </span>
   </button>
 </template>
 
