@@ -2,7 +2,10 @@
   <button class="list-group-item" :class="classStatus(status)" @click="toggle">
     <p class="list-group-item-heading">
       <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
-      &nbsp;<em>{{test.api.path.slice(0, 50)}}</em>
+      &nbsp;<em>{{test.hostA}}{{test.api.path.slice(0, 50)}}</em>
+      <b>VS.</b>
+      <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
+      &nbsp;<em>{{test.hostB}}{{test.api.path.slice(0, 50)}}</em>
     </p>
     <p class="list-group-item-text pull-right">
       <b>{{status}}</b>
