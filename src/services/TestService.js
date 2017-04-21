@@ -37,12 +37,14 @@ export default class TestService {
           let reqA = {
             method: test.val().api.method,
             url: test.val().hostA + test.val().api.path,
-            body: test.val().api.body || {}
+            body: test.val().api.body || {},
+            exclusions: test.val().api.exclusion
           }
           let reqB = {
             method: test.val().api.method,
             url: test.val().hostB + test.val().api.path,
-            body: test.val().api.body || {}
+            body: test.val().api.body || {},
+            exclusions: test.val().api.exclusion
           }
           this.testRef.child(test.key).child('reqA').set(reqA)
           this.testRef.child(test.key).child('reqB').set(reqB)
@@ -72,7 +74,11 @@ export default class TestService {
       .once('value')
       .then(tests => {
         tests.forEach(test => {
-          let result = diffResponse(test.val().resA, test.val().resB)
+          let options = {
+            headersExclusions: test.val().reqA.exclusions,
+            bodyExclusions: test.val().reqA.exclusions
+          }
+          let result = diffResponse(test.val().resA, test.val().resB, options)
           this.testRef.child(test.key).child('result').set(result)
         })
       })
