@@ -13,6 +13,7 @@ export default class SuiteService {
       .then(apis => Object.values(apis).filter(api => !api.skip))
       .then(apis => {
         suite.apis = apis
+        suite.date = new Date().getTime()
         return suite
       })
       .then(suite => this.suiteRef.push(suite))

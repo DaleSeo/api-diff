@@ -10,7 +10,7 @@ import TestDetail from './TestDetail.vue'
 import TestList from './TestList.vue'
 
 export default {
-  props: ['suiteId', 'hostA', 'hostB'],
+  props: ['suiteId'],
   components: {TestDetail, TestList},
   data() {
     return {

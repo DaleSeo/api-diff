@@ -1,25 +1,25 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>테스트 스위트 목록</strong> <small>({{suites.length}})</small>
-      <button class="btn btn-xs btn-primary pull-right" @click="showForm" v-if="!form"><i class="fa fa-plus"/></button>
+      <strong>검증 목록</strong> <small>({{suites.length}})</small>
+      <button class="btn btn-xs btn-primary pull-right" @click="showForm"><i class="fa fa-pencil-square-o"/> 등록</button>
     </div>
-    <table class="table table-striped table-hover">
+    <table class="table table-hover table-bordered">
       <thead>
         <tr>
-          <th>이름</th>
-          <th>호스트</th>
-          <th>요청 시간</th>
+          <th class="text-center">이름</th>
+          <th class="text-center">API수</th>
+          <th class="text-center">호스트A</th>
+          <th class="text-center">호스트B</th>
+          <th class="text-center">일시</th>
         </tr>
       </thead>
       <tbody>
         <tr :key="suite['.key']" v-for="suite in suites" @click="pick(suite['.key'])">
           <td>{{suite.title}}</td>
-          <td>
-            {{suite.hostA}}
-            <br>
-            {{suite.hostB}}
-          </td>
+          <td class="text-center">{{suite.apis.length}}</td>
+          <td>{{suite.hostA}}</td>
+          <td>{{suite.hostB}}</td>
           <td>{{suite.date | formatDate}}</td>
         </tr>
       </tbody>
@@ -41,8 +41,8 @@ export default {
     showForm () {
       this.$emit('showForm')
     },
-    pick (key) {
-      window.location.href = `/services/${this.serviceId}/suites/${key}`
+    pick (suiteId) {
+      window.location.href = `/services/${this.serviceId}/suites/${suiteId}`
     }
   }
 }

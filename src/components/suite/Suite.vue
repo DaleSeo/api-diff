@@ -45,6 +45,7 @@ export default {
     },
     add () {
       console.log('# add')
+      console.log(this.suite)
       suiteService.create(this.suite)
         .then(key => console.log(key))
         .catch(err => console.error(err))

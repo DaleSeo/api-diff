@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>{{api.title}}</h3>
+    <h3>{{service.title}}</h3>
     <hr/>
     <div clsss="row">
       <div class="col-md-2">
@@ -32,8 +32,8 @@ export default {
   components: {Host, Api, Suite},
   firebase () {
     return {
-      api: {
-        source: db.ref('apis').child(this.id),
+      service: {
+        source: db.ref('services').child(this.id),
         asObject: true
       }
     }
