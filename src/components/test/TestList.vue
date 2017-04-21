@@ -1,22 +1,18 @@
 <template>
-  <table class="table table-hover">
-    <caption>테스트 목록 ({{tests.length}})</caption>
-    <thead>
-      <tr>
-        <th>호스트A</th>
-        <th>호스트B</th>
-        <th>상태</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>테스트 아이템</strong> <small>({{tests.length}})</small>
+    </div>
+    <ul class="list-group">
       <TestItem
         :test="test"
         :suiteId="suiteId"
         :key="test['.key']"
         @pick="pick"
-        v-for="test in tests"/>
-    </tbody>
-  </table>
+        v-for="test in tests"
+      />
+    </ul>
+  </div>
 </template>
 
 <script>

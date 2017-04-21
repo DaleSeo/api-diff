@@ -1,58 +1,49 @@
 <template>
-  <tr :class="{active: active}" @click="pick">
-    <td>
-      <span class="label" :class="className(test.reqA.method)">{{test.reqA.method}}</span>
-      &nbsp;<em>{{test.reqA.url.slice(0, 50)}}</em>
-      <pre v-show="active && test.reqA.body" v-text="test.reqA.body"/>
-      <div v-if="active && test.resA">
-        <hr/>
-        <b>{{test.resA.statusCode}} {{test.resA.statusText}}</b>
-        <pre v-show="active && test.resA.body" v-text="test.resA.body"/>
-      </div>
-    </td>
-    <td>
-      <span class="label" :class="className(test.reqB.method)">{{test.reqB.method}}</span>
-      &nbsp;<em>{{test.reqB.url.slice(0, 50)}}</em>
-      <pre v-show="active && test.reqB.body" v-text="test.reqB.body"/>
-      <div v-if="active && test.resB">
-        <hr/>
-        <b>{{test.resB.statusCode}} {{test.resB.statusText}}</b>
-        <pre v-show="active && test.resB.body" v-text="test.resB.body"/>
-      </div>
-    </td>
-    <td>
-      {{status}}
-    </td>
-  </tr>
+  <button class="list-group-item" :class="classStatus(status)" @click="toggle">
+    <p class="list-group-item-heading">
+      <span class="label" :class="classMethod(test.api.method)">{{test.api.method}}</span>
+      &nbsp;<em>{{test.api.path.slice(0, 50)}}</em>
+    </p>
+    <p class="list-group-item-text pull-right">
+      <b>{{status}}</b>
+      <span v-if="status == '비교 완료'">
+        <button class="btn btn-sm btn-primary" v-if="hasPassed" @click="pick">PASS</button>
+        <button class="btn btn-sm btn-danger" v-else @click="pick">FAIL</button>
+      </span>
+    </p>
+  </button>
 </template>
 
 <script>
-import ResDiff from './ResDiff.vue'
-
 export default {
   props: ['test', 'suiteId'],
-  components: { ResDiff },
   computed: {
-    status() {
+    status () {
       if (this.test.result) {
-        return '검증'
+        return '비교 완료'
       }
-
-      if (this.test.resA || this.test.errA) {
-        return '호출'
+      if (this.test.errA || this.test.errB) {
+        return '오류 발생'
       }
-
-      return '적재'
+      if (this.test.resA && this.test.resB) {
+        return '호출 완료'
+      }
+      return '적재 완료'
+    },
+    hasPassed () {
+      return this.test.result
+        && this.test.result.statusEqual
+        && this.test.result.headersEqual
+        && this.test.result.bodyEqual
     }
   },
   data () {
     return {
       active: false,
-      diff: false
     }
   },
   methods: {
-    className (method) {
+    classMethod (method) {
       switch (method) {
         case 'GET': return 'label-success'
         case 'POST': return 'label-info'
@@ -61,20 +52,20 @@ export default {
         default: return 'label-primary'
       }
     },
+    classStatus (status) {
+      switch (status) {
+        case '비교 완료': return 'list-group-item-info'
+        case '호출 완료': return 'list-group-item-success'
+        case '적재 완료': return 'list-group-item-warning'
+        case '오류 발생': return 'list-group-item-danger'
+        default: return 'list-group-item-primary'
+      }
+    },
     toggle () {
       this.active = !this.active
     },
-    showDiff () {
-      console.log('#showDiff')
-      this.diff = true
-    },
-    hideDiff () {
-      console.log('#hideDiff')
-      this.diff = false
-    },
     pick () {
       this.$emit('pick', this.test)
-      // window.location.href = `/tests/${this.suiteId}/$}`
     }
   }
 }

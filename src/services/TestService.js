@@ -22,7 +22,7 @@ export default class TestService {
         url: suite.hostB + api.path,
         body: api.body || {}
       }
-      this.testRef.push({ reqA, reqB })
+      this.testRef.push({ api, reqA, reqB })
     })
   }
 

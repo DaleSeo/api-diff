@@ -18,8 +18,8 @@
         </select>
       </div>
       <div class="form-group text-right">
-        <button type="submit" class="btn btn-sm btn-primary">추가</button>
-        <button type="reset" class="btn btn-sm btn-primary">취소</button>
+        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-floppy-o"/> 추가</button>
+        <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-undo"/> 취소</button>
       </div>
     </form>
   </div>

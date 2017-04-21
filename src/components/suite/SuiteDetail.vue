@@ -2,27 +2,27 @@
   <div class="container">
     <h3>
       <i class="fa fa-bar-chart"/> <b>{{suite.title}}</b>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-warning" @click="list">
+      <div class="btn-group pull-right">
+        <button class="btn btn-sm btn-default" title="목록" @click="list">
           <i class="fa fa-list"/>
         </button>
-        <button class="btn btn-sm btn-danger" @click="del">
+        <button class="btn btn-sm btn-default" title="삭제" @click="del">
           <i class="fa fa-trash"/>
         </button>
       </div>
     </h3>
     <hr/>
     <blockquote>
-      <button class="btn btn-info" @click="prepTests">
+      <button class="btn btn-sm btn-warning" @click="prepTests">
         <i class="fa fa-industry"/> 적재
       </button>
-      <button class="btn btn-info" @click="callTests">
+      <button class="btn btn-sm btn-success" @click="callTests">
         <i class="fa fa-play"/> 호출
       </button>
-      <button class="btn btn-info" @click="diffTests">
+      <button class="btn btn-sm btn-info" @click="diffTests">
         <i class="fa fa-code"/> 비교
       </button>
-      버튼을 차례로 클릭하여 검증을 수행하십시오.
+      버튼을 차례로 클릭하여 일괄 검증을 수행하십시오.
     </blockquote>
     <Test :suiteId="suiteId"/>
   </div>
