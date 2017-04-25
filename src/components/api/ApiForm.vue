@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
           <label for="exclusion">비교 예외 항목</label>
-          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model.lazy="api.exclusion"/>
+          <input id="exclusion" class="form-control" placeholder="쉼표로 구분" v-model.lazy="exclusionsText"/>
         </div>
         <div class="checkbox">
           <label>
@@ -53,6 +53,16 @@
 <script>
 export default {
   props: ['api'],
+  computed: {
+    exclusionsText: {
+      get: function () {
+        return this.api.exclusions ? this.api.exclusions.join() : ''
+      },
+      set: function (text) {
+        this.api.exclusions = text.split(',')
+      }
+    }
+  },
   methods: {
     modify () {
       this.$emit('modify')

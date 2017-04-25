@@ -38,13 +38,13 @@ export default class TestService {
             method: test.val().api.method,
             url: test.val().hostA + test.val().api.path,
             body: test.val().api.body || {},
-            exclusions: test.val().api.exclusion
+            exclusions: test.val().api.exclusions || []
           }
           let reqB = {
             method: test.val().api.method,
             url: test.val().hostB + test.val().api.path,
             body: test.val().api.body || {},
-            exclusions: test.val().api.exclusion
+            exclusions: test.val().api.exclusions || []
           }
           this.testRef.child(test.key).child('reqA').set(reqA)
           this.testRef.child(test.key).child('reqB').set(reqB)

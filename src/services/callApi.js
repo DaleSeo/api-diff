@@ -1,16 +1,21 @@
 import superagent from 'superagent'
 
 export default function callApi (req) {
-  return superagent(req.method, req.url)
-    .send(req.body)
+  console.log(req)
+  return superagent.post('http://localhost:3000')
+    .send(req)
     .then(res => {
       return {
-        statusCode: res.statusCode,
-        statusText: res.statusText,
-        headers: res.header,
-        body: res.body,
-        text: res.text
+        statusCode: res.body.statusCode,
+        statusText: res.body.statusMessage,
+        headers: res.body.headers,
+        body: res.body.body,
+        text: res.body.text
       }
+    })
+    .then(res => {
+      console.log(res)
+      return res
     })
     .catch(err => {
       console.error(err)

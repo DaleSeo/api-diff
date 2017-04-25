@@ -31,7 +31,7 @@ function getInitialData() {
       text: '',
       body: '',
       description: '',
-      exclusion: '',
+      exclusions: [],
       skip: false
     }
   }
