@@ -10,6 +10,11 @@
         </button>
         <a class="navbar-brand" href="/"><b>API Diff</b>&nbsp;&nbsp;&nbsp;<small>API 비교 도구</small></a>
       </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+         <li><a href="/settings"><i class="fa fa-cog"/> 설정</a></li>
+       </ul>
+      </div>
     </div>
   </nav>
 </template>
