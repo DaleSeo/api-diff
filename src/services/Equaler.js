@@ -32,17 +32,23 @@ export default class Equaler {
   }
 
   isObjectEqual (objA, objB) {
+    if (this.exclusions) {
+      this.exclusions.forEach(key => {
+        delete objA[key]
+        delete objB[key]
+      })
+    }
     if (Object.keys(objA).length !== Object.keys(objB).length) {
+      console.log('NotSameLength:', Object.keys(objA).length, 'vs.', Object.keys(objB).length)
       return false
     }
     for (let key in objA) {
-      if (this.exclusions && this.exclusions.includes(key)) {
-        continue
-      }
       if (!_.has(objB, key)) {
+        console.log('HasNot ', key, ':', objA[key], 'vs.', objB[key])
         return false
       }
       if (!this.isEqual(objA[key], objB[key])) {
+        console.log('NotEqual ', key, ':', objA[key], 'vs.', objB[key])
         return false
       }
     }

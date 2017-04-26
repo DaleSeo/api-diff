@@ -1,5 +1,6 @@
 import callApi from './callApi'
 import diffResponse from './diffResponse'
+import SettingsService from './SettingsService'
 
 import db from './database'
 
@@ -70,17 +71,20 @@ export default class TestService {
 
   diff () {
     console.log('TestService#diff')
-    return this.testRef
-      .once('value')
-      .then(tests => {
-        tests.forEach(test => {
-          let options = {
-            headersExclusions: test.val().reqA.exclusions,
-            bodyExclusions: test.val().reqA.exclusions
-          }
-          let result = diffResponse(test.val().resA, test.val().resB, options)
-          this.testRef.child(test.key).child('result').set(result)
-        })
+    new SettingsService().findGlobalExclusions()
+      .then(globalExclusions => {
+        this.testRef
+          .once('value')
+          .then(tests => {
+            tests.forEach(test => {
+              let options = {
+                headersExclusions: globalExclusions.headersExclusions.concat(test.val().reqA.exclusions),
+                bodyExclusions: globalExclusions.bodyExclusions.concat(test.val().reqA.exclusions)
+              }
+              let result = diffResponse(test.val().resA, test.val().resB, options)
+              this.testRef.child(test.key).child('result').set(result)
+            })
+          })
       })
   }
 
