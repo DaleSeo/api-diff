@@ -1,3 +1,3 @@
-# API Diff
+# One Tests
 
-> API 응답 비교 도구
+> 스토어플랫폼 테스트 플랫폼
