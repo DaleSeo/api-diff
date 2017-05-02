@@ -8,7 +8,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/"><b>API Diff</b>&nbsp;&nbsp;&nbsp;<small>API 비교 도구</small></a>
+        <a class="navbar-brand" href="/"><b>One Tests</b></a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
