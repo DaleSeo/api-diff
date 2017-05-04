@@ -2,7 +2,7 @@ import superagent from 'superagent'
 
 export default function callApi (req) {
   console.log(req)
-  return superagent.post('http://localhost:3000')
+  return superagent.post('http://localhost:3000/callApi')
     .send(req)
     .then(res => {
       return {
