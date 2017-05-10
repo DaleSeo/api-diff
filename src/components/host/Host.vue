@@ -6,7 +6,7 @@
     <ul class="list-group">
       <button class="list-group-item" v-for="host in hosts">
         <b>[{{host.title}}]</b> {{host.baseUrl}}
-        <button class="close" @click="del(host)">&times;</button>
+        <button class="close" @click="del(host._id)">&times;</button>
       </button>
     </ul>
     <div class="panel-body">
@@ -28,35 +28,44 @@
 </template>
 
 <script>
-import db from '../../services/database'
+import hostSvc from '../../services/hostSvc'
 
 export default {
   props: ['id'],
-  firebase () {
-    return {
-      hosts: db.ref('services/' + this.id).child('hosts')
-    }
-  },
   data () {
     return {
+      hosts: [],
       newHost: {
         title: '',
-        baseUrl: ''
+        baseUrl: '',
+        serviceId: this.id
       }
     }
   },
+  created() {
+    this.list()
+  },
   methods: {
-    add (host) {
-      console.log('# add to ', this.$firebaseRefs.hosts.toString())
-      console.log('host:', host)
-      this.$firebaseRefs.hosts.push(host)
-      this.newHost.title = ''
-      this.newHost.baseUrl = ''
+    list () {
+      hostSvc.list(this.id)
+        .then(hosts => this.hosts = hosts)
     },
-    del (host) {
-      console.log('# del to ', this.$firebaseRefs.hosts.toString())
+    add (host) {
       console.log('host:', host)
-      this.$firebaseRefs.hosts.child(host['.key']).remove()
+      hostSvc.create(host)
+        .then(_ => {
+          toastr.success('Created')
+          this.newHost.title = ''
+          this.newHost.baseUrl = ''
+          this.list()
+        })
+    },
+    del (id) {
+      hostSvc.remove(id)
+        .then(_ => {
+          toastr.success('Deleted')
+          this.list()
+        })
     }
   }
 }

@@ -62,7 +62,7 @@ export default {
     },
     list () {
       console.log('ServiceList.vue#list()')
-      serviceSvc.find()
+      serviceSvc.list()
         .then(services => this.services = services)
     }
   }

@@ -2,7 +2,7 @@ import superagent from 'superagent'
 
 const restUrl = 'http://localhost:3000/services'
 
-function find() {
+function list() {
   return superagent.get(restUrl)
     .then(res => res.body._embedded.services)
 }
@@ -12,6 +12,11 @@ function create(service) {
     .send(service)
 }
 
+function detail(id) {
+  return superagent.get(restUrl + '/' + id)
+    .then(res => res.body)
+}
+
 export default {
-  find, create
+  list, create, detail
 }

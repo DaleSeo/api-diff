@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>{{service.title}}</h3>
+    <h3>[{{service.code}}] {{service.name}}</h3>
     <hr/>
     <div clsss="row">
       <div class="col-md-2">
@@ -25,23 +25,20 @@ import Host from '../host/Host.vue'
 import Api from '../api/Api.vue'
 import Suite from '../suite/Suite.vue'
 
-import db from '../../services/database'
+import serviceSvc from '../../services/serviceSvc'
 
 export default {
   props: ['id'],
   components: {Host, Api, Suite},
-  firebase () {
-    return {
-      service: {
-        source: db.ref('services').child(this.id),
-        asObject: true
-      }
-    }
-  },
   data () {
     return {
-      tab: 'suite',
+      tab: 'host',
+      service: ''
     }
+  },
+  created() {
+    serviceSvc.detail(this.id)
+      .then(service => this.service = service)
   }
 }
 </script>
