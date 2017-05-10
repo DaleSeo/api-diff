@@ -8,49 +8,62 @@
       <ul class="list-group">
         <router-link
           class="list-group-item"
-          :to="`/services/${service['.key']}`"
-          :key="service['.key']"
+          :to="`/services/${service.id}`"
+          :key="service.id"
           v-for="service in services">
-          <div class="text-center"><strong>{{service.title}}</strong></div>
+          <div class="text-center"><strong>{{service.name}}</strong></div>
         </router-link>
       </ul>
     </div>
-    <form @submit.prevent="add(newService)" v-if="form">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="서비스 이름을 영문으로 입력하세요." v-model="newService.title"/>
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-default">추가</button>
-        </span>
-      </div>
-    </form>
+    <ServiceForm v-if="form" :service="service" @add="add" @cancel="cancel"/>
   </div>
 </template>
 
 <script>
-import db from '../../services/database'
+import ServiceForm from './ServiceForm.vue'
+
+import serviceSvc from '../../services/serviceSvc'
 
 export default {
+  components: {ServiceForm},
   data () {
     return {
       form: false,
-      newService: {
-        title: ''
-      }
+      service: this.initService(),
+      services: []
     }
   },
-  firebase() {
-    return {
-      services: db.ref('services')
-    }
+  created () {
+    this.list()
   },
   methods: {
+    initService () {
+      return {
+        code: '',
+        name: '',
+        description: ''
+      }
+    },
     showForm () {
       this.form = true
     },
-    add (service) {
+    add () {
       console.log('# add')
-      this.$firebaseRefs.services.push(service)
-      this.newService.title = ''
+      serviceSvc.create(this.service)
+        .then(_ => {
+          toastr.success('Created')
+          this.service = this.initService()
+          this.list()
+        })
+    },
+    cancel () {
+      this.form = false
+      this.service = this.initService()
+    },
+    list () {
+      console.log('ServiceList.vue#list()')
+      serviceSvc.find()
+        .then(services => this.services = services)
     }
   }
 }
