@@ -3,7 +3,7 @@ import superagent from 'superagent'
 const restUrl = 'http://localhost:3000/hosts'
 
 function list(serviceId) {
-  return superagent.get(restUrl)
+  return superagent.get(restUrl + '/search/findByServiceId?serviceId=' + serviceId)
     .then(res => res.body._embedded.hosts)
 }
 

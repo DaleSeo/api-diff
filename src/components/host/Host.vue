@@ -6,7 +6,7 @@
     <ul class="list-group">
       <button class="list-group-item" v-for="host in hosts">
         <b>[{{host.title}}]</b> {{host.baseUrl}}
-        <button class="close" @click="del(host._id)">&times;</button>
+        <button class="close" @click="del(host.id)">&times;</button>
       </button>
     </ul>
     <div class="panel-body">
