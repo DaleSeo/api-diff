@@ -7,7 +7,7 @@
     <ul class="list-group">
       <ApiItem
         v-for="api in apis"
-        :key="api['.key']"
+        :key="api.id"
         :api="api"
         :activeApi="activeApi"
         @detail="detail"

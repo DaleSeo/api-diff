@@ -64,7 +64,7 @@ export default {
       console.log('ServiceList.vue#list()')
       serviceSvc.list()
         .then(services => this.services = services)
-        .catch(err => toastr.error('서비스 목록 조회 실패'))
+        .catch(err => toastr.error('목록 조회 실패'))
     }
   }
 }

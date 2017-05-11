@@ -14,7 +14,7 @@ export default {
   props: ['api', 'activeApi'],
   computed: {
     active () {
-      return this.api['.key'] === this.activeApi['.key']
+      return this.api.id === this.activeApi.id
     }
   },
   methods: {

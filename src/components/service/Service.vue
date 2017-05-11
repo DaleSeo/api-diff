@@ -32,7 +32,7 @@ export default {
   components: {Host, Api, Suite},
   data () {
     return {
-      tab: 'host',
+      tab: 'api',
       service: ''
     }
   },

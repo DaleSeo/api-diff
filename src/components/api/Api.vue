@@ -2,85 +2,93 @@
   <div class="row">
     <div class="col-md-7">
       <ApiList
-        :apis="apis" :activeApi="activeApi"
+        :apis="apis" :activeApi="api"
         @detail="detail" @create="create"
       />
     </div>
     <div class="col-md-5">
-      <ApiForm v-if="activeApi['.key']"
-        :api="activeApi"
-        @reset="reset" @modify="modify" @remove="remove"
+      <ApiForm v-show="showForm"
+        :api="api"
+        @reset="reset" @save="save" @remove="remove"
       />
     </div>
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
+
 import ApiList from './ApiList.vue'
 import ApiForm from './ApiForm.vue'
 
-import db from '../../services/database'
-
-function getInitialData() {
-  return {
-    activeApi: {
-      '.key': '',
-      title: '',
-      method: 'GET',
-      path: '',
-      text: '',
-      body: '',
-      description: '',
-      exclusions: [],
-      skip: false
-    }
-  }
-}
+import apiSvc from '../../services/apiSvc'
 
 export default {
   components: {ApiList, ApiForm},
   props: ['id'],
-  firebase () {
+  data () {
     return {
-      apis: db.ref('services/' + this.id).child('apis')
+      showForm: false,
+      apis: [],
+      api: this.initApi()
     }
   },
-  data () {
-    return getInitialData()
+  created () {
+    this.list()
   },
   methods: {
+    initApi () {
+      return {
+        id: '',
+        title: '',
+        method: 'GET',
+        path: '',
+        body: '',
+        description: '',
+        exclusions: [],
+        serviceId: this.id,
+        skip: false
+      }
+    },
+    list () {
+      console.log('Service.vue#list')
+      apiSvc.list(this.id)
+        .then(apis => this.apis = apis)
+        .catch(err => {
+          console.error(err)
+          toastr.error('목록 조회 실패')
+        })
+    },
     reset () {
-      console.log('#reset')
-      Object.assign(this.$data, getInitialData())
+      console.log('Service.vue#reset')
+      this.showForm = false
+      this.api = this.initApi()
     },
     detail (api) {
-      console.log('#detail')
-      this.activeApi = Object.assign({}, api)
+      console.log('Service.vue#detail')
+      this.api = api
+      this.showForm = true
     },
     create () {
-      console.log('#create')
+      console.log('Service.vue#create')
       this.reset()
-      this.activeApi['.key'] = this.$firebaseRefs.apis.push().key
+      this.showForm = true
     },
-    modify () {
-      console.log('#modify')
-      let api = Object.assign({}, this.activeApi)
-      delete api['.key']
-      if (api.text.trim()) {
-        try {
-          api.body = JSON.parse(api.text)
-        } catch (err) {
-          return window.alert(err)
-        }
-      } else {
-        api.body = ''
-      }
-      this.$firebaseRefs.apis.child(this.activeApi['.key']).set(api)
+    save () {
+      console.log('Service.vue#save')
+      apiSvc.save(_.cloneDeep(this.api))
+        .then(_ => toastr.success('저장되었습니다'))
+        .catch(err => toastr.error('저장 실패'))
+        .then(this.reset)
+        .then(this.list)
     },
     remove () {
-      console.log('#remove')
-      this.$firebaseRefs.apis.child(this.activeApi['.key']).remove()
-      this.reset()
+      console.log('Service.vue##remove')
+      apiSvc.remove(this.api.id)
+        .then(_ => toastr.success('삭제되었습니다'))
+        .catch(err => toastr.error('삭제 실패'))
+        .then(this.reset)
+        .then(this.list)
     }
   }
 }

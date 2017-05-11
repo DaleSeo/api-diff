@@ -1,9 +1,9 @@
 <template>
-  <form @submit.prevent="modify" @reset.prevent="reset">
+  <form @submit.prevent="save" @reset.prevent="reset">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>규격 상세</strong>
-        <small>({{api['.key']}})</small>
+        <small>({{api.id}})</small>
       </div><!-- panel-heading -->
       <div class="panel-body">
         <div class="form-group">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
           <label for="body">바디</label>
-          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model.lazy="api.text"/>
+          <textarea id="body" class="form-control" placeholder="JSON 포멧" rows="3" v-model.lazy="api.body"/>
         </div>
         <div class="form-group">
           <label for="description">설명</label>
@@ -64,8 +64,8 @@ export default {
     }
   },
   methods: {
-    modify () {
-      this.$emit('modify')
+    save () {
+      this.$emit('save')
     },
     remove () {
       this.$emit('remove')
