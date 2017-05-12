@@ -19,5 +19,6 @@ export default function callApi (req) {
     })
     .catch(err => {
       console.error(err)
+      throw err
     })
 }

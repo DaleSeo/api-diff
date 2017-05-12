@@ -12,6 +12,9 @@ import SuiteDetail from './components/suite/SuiteDetail.vue'
 import TestDetail from './components/test/TestDetail.vue'
 import Settings from './components/settings/Settings.vue'
 
+import Console from './components/console/Index.vue'
+import Dashboard from './components/dashboard/Index.vue'
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -19,7 +22,10 @@ const router = new VueRouter({
     {path: '/services/:id', component: Service, props: true},
     {path: '/services/:serviceId/suites/:suiteId', component: SuiteDetail, props: true},
     {path: '/tests/:suiteId/:testId', component: TestDetail, props: true},
-    {path: '/settings', component: Settings}
+    {path: '/settings', component: Settings},
+    {path: '/console', component: Console},
+    {path: '/suite', component: Dashboard},
+    {path: '/dashboard', component: Dashboard}
   ]
 })
 
