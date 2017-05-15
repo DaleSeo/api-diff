@@ -1,22 +1,50 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>응답</strong>
+      <i class="fa fa-arrow-circle-left"/> <strong>응답</strong>
     </div>
     <div class="panel-body">
-      <Progress v-if="inProgress"/>
-      <div v-if="response.statusCode">
-        <pre>{{response}}</pre>
+      <ProgressBar v-if="inProgress"/>
+
+      <div class="alert alert-danger" v-if="response.error">
+        <strong>호출 실패</strong> {{response.error}}
+      </div>
+
+      <div class="alert alert-success" v-if="response.statusCode">
+        <strong>{{response.statusCode}}</strong> {{response.statusMessage}}
+      </div>
+
+      <ul class="nav nav-tabs">
+        <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a href="#headers">헤더</a></li>
+        <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a href="#body">바디</a></li>
+      </ul>
+
+      <div id="headers" v-if="tab === 'headers'" class="well">
+        <dl>
+          <div v-for="(val, key) in response.headers">
+            <dt>{{key}}</dt>
+            <dd>{{val}}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div id="body" v-if="tab === 'body'">
+        <pre>{{response.body}}</pre>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Progress from '../common/Progress.vue'
+import ProgressBar from '../common/ProgressBar.vue'
 
 export default {
-  components: {Progress},
-  props: ['response', 'inProgress']
+  components: {ProgressBar},
+  props: ['response', 'inProgress'],
+  data () {
+    return {
+      tab: 'body',
+    }
+  }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>API 목록</strong> <small>({{apis.length}})</small>
+      <i class="fa fa-list"/> <strong>API</strong> <small>({{apis.length}})</small>
     </div>
     <ul class="list-group">
       <ApiItem

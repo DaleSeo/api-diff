@@ -41,9 +41,12 @@ export default {
     initRequest () {
       return {
         method: 'GET',
-        // queries: [],
-        // headers: [],
-        url: 'http://',
+        queries: [],
+        headers: [
+          {key: 'Accept', value: 'application/json;charset=UTF-8'},
+          {key: 'Content-type', value: 'application/json;charset=UTF-8'}
+        ],
+        url: 'http://jsonplaceholder.typicode.com/posts/1',
         body: ''
       }
     },
@@ -52,7 +55,8 @@ export default {
         statusCode: '',
         statusMessage: '',
         headers: {},
-        body: ''
+        body: '',
+        error: ''
       }
     },
     callApi () {
@@ -62,7 +66,7 @@ export default {
         .then(res => this.response = res)
         .catch(err => {
           console.error(err)
-          toastr.error(err.response.body.message, '호출 실패')
+          this.response.error = err.response.body.message
         })
         .then(_ => this.inProgress = false)
     }

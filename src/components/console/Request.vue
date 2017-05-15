@@ -2,7 +2,7 @@
   <form @submit.prevent="callApi" @reset="reset">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>요청</strong>
+        <i class="fa fa-arrow-circle-right"/> <strong>요청</strong>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -17,25 +17,43 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <textarea id="text" class="form-control" rows="3" v-model="request.text"/>
+            <ul class="nav nav-tabs">
+              <li :class="{active: tab === 'queries'}" @click="tab = 'queries'"><a href="#queries">쿼리 파라미터</a></li>
+              <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a href="#headers">헤더</a></li>
+              <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a href="#body">바디</a></li>
+            </ul>
+
+            <div id="queries" v-if="tab === 'queries'">
+              <Entries :entries="request.queries"/>
+            </div>
+
+            <div id="headers" v-if="tab === 'headers'">
+              <Entries :entries="request.headers"/>
+            </div>
+
+            <div id="body" v-if="tab === 'body'">
+              <textarea class="form-control" rows="3" v-model="request.text"/>
+            </div>
           </div>
         </div>
-        <div class="row text-right">
-          <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary">호출</button>
-            <button type="reset" class="btn btn-default">취소</button>
-          </div>
-        </div>
+      </div>
+      <div class="panel-footer text-right">
+          <button type="submit" class="btn btn-primary">호출</button>
+          <button type="reset" class="btn btn-default">취소</button>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+import Entries from '../common/Entries.vue'
+
 export default {
+  components: {Entries},
   props: ['request'],
   data () {
     return {
+      tab: 'body',
       methods: ['GET', 'POST', 'PUT', 'DELETE']
     }
   },
@@ -54,5 +72,8 @@ export default {
 .row {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+.nav {
+  margin-bottom: 15px;
 }
 </style>
