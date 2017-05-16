@@ -3,7 +3,11 @@ import superagent from 'superagent'
 const restUrl = 'http://localhost:3000/apis'
 
 function list(serviceId) {
-  return superagent.get(restUrl + '/search/findByServiceId?serviceId=' + serviceId)
+  let url = restUrl
+  if (serviceId) {
+    url = restUrl + '/search/findByServiceId?serviceId=' + serviceId
+  }
+  return superagent.get(url)
     .then(res => res.body._embedded.apis)
 }
 

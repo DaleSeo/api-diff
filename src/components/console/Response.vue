@@ -14,22 +14,24 @@
         <strong>{{response.statusCode}}</strong> {{response.statusMessage}}
       </div>
 
-      <ul class="nav nav-tabs">
-        <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a href="#headers">헤더</a></li>
-        <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a href="#body">바디</a></li>
-      </ul>
+      <div v-if="response.body">
+        <ul class="nav nav-tabs">
+          <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a href="#headers">헤더</a></li>
+          <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a href="#body">바디</a></li>
+        </ul>
 
-      <div id="headers" v-if="tab === 'headers'" class="well">
-        <dl>
-          <div v-for="(val, key) in response.headers">
-            <dt>{{key}}</dt>
-            <dd>{{val}}</dd>
-          </div>
-        </dl>
-      </div>
+        <div id="headers" v-if="tab === 'headers'" class="well">
+          <dl>
+            <div v-for="(val, key) in response.headers">
+              <dt>{{key}}</dt>
+              <dd>{{val}}</dd>
+            </div>
+          </dl>
+        </div>
 
-      <div id="body" v-if="tab === 'body'">
-        <pre>{{response.body}}</pre>
+        <div id="body" v-if="tab === 'body'">
+          <pre>{{response.body}}</pre>
+        </div>
       </div>
     </div>
   </div>

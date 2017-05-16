@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       tab: 'body',
-      methods: ['GET', 'POST', 'PUT', 'DELETE']
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD']
     }
   },
   methods: {

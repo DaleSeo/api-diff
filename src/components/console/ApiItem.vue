@@ -1,22 +1,18 @@
 <template>
-  <button class="list-group-item" :class="{active: active}" @click="detail">
-    <h4 v-show="active">{{api.title}}</h4>
-    <p class="list-group-item-heading">
+  <button class="list-group-item" @click="pick">
+    <h5 class="list-group-item-heading">
+      {{api.title}}
+    </h5>
+    <p class="list-group-item-text">
       <span class="label" :class="className(api.method)">{{api.method}}</span>
       &nbsp;<em>{{api.path.slice(0, 50)}}</em>
     </p>
-    <pre v-show="active && api.body" v-text="api.body"/>
   </button>
 </template>
 
 <script>
 export default {
-  props: ['api', 'activeApi'],
-  computed: {
-    active () {
-      return this.api.id === this.activeApi.id
-    }
-  },
+  props: ['api'],
   methods: {
     className (method) {
       switch (method) {
@@ -28,7 +24,7 @@ export default {
       }
     },
     detail () {
-      this.$emit('detail', this.api)
+      this.$emit('pick', this.api.id)
     }
   }
 }

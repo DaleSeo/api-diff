@@ -51,7 +51,7 @@ export default {
       }
     },
     list () {
-      console.log('Service.vue#list')
+      console.log('Api.vue#list')
       apiSvc.list(this.id)
         .then(apis => this.apis = apis)
         .catch(err => {
@@ -60,22 +60,22 @@ export default {
         })
     },
     reset () {
-      console.log('Service.vue#reset')
+      console.log('Api.vue#reset')
       this.showForm = false
       this.api = this.initApi()
     },
     detail (api) {
-      console.log('Service.vue#detail')
+      console.log('Api.vue#detail')
       this.api = api
       this.showForm = true
     },
     create () {
-      console.log('Service.vue#create')
+      console.log('Api.vue#create')
       this.reset()
       this.showForm = true
     },
     save () {
-      console.log('Service.vue#save')
+      console.log('Api.vue#save')
       apiSvc.save(_.cloneDeep(this.api))
         .then(_ => toastr.success('저장되었습니다'))
         .catch(err => toastr.error('저장 실패'))
@@ -83,7 +83,7 @@ export default {
         .then(this.list)
     },
     remove () {
-      console.log('Service.vue##remove')
+      console.log('Api.vue##remove')
       apiSvc.remove(this.api.id)
         .then(_ => toastr.success('삭제되었습니다'))
         .catch(err => toastr.error('삭제 실패'))
