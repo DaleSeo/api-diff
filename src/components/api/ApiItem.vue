@@ -1,7 +1,9 @@
 <template>
   <button class="list-group-item" :class="{active: active}" @click="detail">
-    <h4 v-show="active">{{api.title}}</h4>
-    <p class="list-group-item-heading">
+    <h5 class="list-group-item-heading">
+      {{api.title}}
+    </h5>
+    <p class="list-group-item-text">
       <span class="label" :class="className(api.method)">{{api.method}}</span>
       &nbsp;<em>{{api.path.slice(0, 50)}}</em>
     </p>

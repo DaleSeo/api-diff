@@ -18,9 +18,9 @@
         <div class="row">
           <div class="col-sm-12">
             <ul class="nav nav-tabs">
-              <li :class="{active: tab === 'queries'}" @click="tab = 'queries'"><a href="#queries">쿼리 파라미터</a></li>
-              <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a href="#headers">헤더</a></li>
-              <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a href="#body">바디</a></li>
+              <li :class="{active: tab === 'queries'}" @click="tab = 'queries'"><a>쿼리 파라미터</a></li>
+              <li :class="{active: tab === 'headers'}" @click="tab = 'headers'"><a>헤더</a></li>
+              <li :class="{active: tab === 'body'}" @click="tab = 'body'"><a>바디</a></li>
             </ul>
 
             <div id="queries" v-if="tab === 'queries'">
@@ -32,7 +32,7 @@
             </div>
 
             <div id="body" v-if="tab === 'body'">
-              <textarea class="form-control" rows="3" v-model="request.text"/>
+              <textarea class="form-control" rows="5" v-model="request.body"/>
             </div>
           </div>
         </div>

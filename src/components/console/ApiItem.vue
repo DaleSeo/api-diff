@@ -23,8 +23,8 @@ export default {
         default: return 'label-primary'
       }
     },
-    detail () {
-      this.$emit('pick', this.api.id)
+    pick () {
+      this.$emit('pick', this.api)
     }
   }
 }

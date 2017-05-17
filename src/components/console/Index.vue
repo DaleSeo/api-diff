@@ -4,7 +4,9 @@
     <hr/>
     <div class="row">
       <div class="col-md-4">
-        <ApiList />
+        <ApiList
+          @pickApi="pickApi"
+        />
       </div>
       <div class="col-md-8">
         <Request
@@ -22,6 +24,7 @@
 
 <script>
 import callApi from '../../services/callApi'
+import serviceSvc from '../../services/serviceSvc'
 
 import ApiList from './ApiList.vue'
 import Request from './Request.vue'
@@ -65,10 +68,17 @@ export default {
       callApi(this.request)
         .then(res => this.response = res)
         .catch(err => {
-          console.error(err)
+          console.log(err)
           this.response.error = err.response.body.message
         })
         .then(_ => this.inProgress = false)
+    },
+    pickApi (api) {
+      console.log('Index.vue#pickApi()', api)
+      this.request.method = api.method
+      this.request.url = api.url
+      this.request.body = api.body
+      this.response = this.initResponse
     }
   }
 }
