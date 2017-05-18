@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="callApi" @reset="reset">
+  <form @submit.prevent @keyup.enter="callApi">
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-arrow-circle-right"/> <strong>요청</strong>
@@ -37,10 +37,6 @@
           </div>
         </div>
       </div>
-      <div class="panel-footer text-right">
-          <button type="submit" class="btn btn-primary">호출</button>
-          <button type="reset" class="btn btn-default">취소</button>
-      </div>
     </div>
   </form>
 </template>
@@ -60,9 +56,6 @@ export default {
   methods: {
     callApi () {
       this.$emit('callApi')
-    },
-    reset () {
-      alert('reset')
     }
   }
 }

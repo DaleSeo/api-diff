@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
+import VueClipboard from 'vue-clipboard2'
 import App from './App.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueFire)
+Vue.use(VueClipboard)
 
 import Index from './components/Index.vue'
 import Service from './components/service/Service.vue'
