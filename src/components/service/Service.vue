@@ -23,7 +23,7 @@
 <script>
 import Host from '../host/Host.vue'
 import Api from '../api/Api.vue'
-import Suite from '../suite/Suite.vue'
+import Suite from '../suite_bak/Suite.vue'
 
 import serviceSvc from '../../services/serviceSvc'
 
