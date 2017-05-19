@@ -21,7 +21,7 @@
         </ul>
 
         <div id="headers" v-if="tab === 'headers'" class="well">
-          <dl>
+          <dl class="dl-horizontal">
             <div v-for="(val, key) in response.headers">
               <dt>{{key}}</dt>
               <dd>{{val}}</dd>
@@ -50,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.dl-horizontal {
+  margin-bottom: 0px;
+}
+</style>

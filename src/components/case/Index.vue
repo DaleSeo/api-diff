@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3><i class="fa fa-cube"/> <b>Suite</b> <small>개별 검증</small></h3>
+    <h3><i class="fa fa-cube"/> <b>Test Case</b> <small>검증 목록</small></h3>
     <hr/>
     <List :calls="calls"/>
   </div>
@@ -14,7 +14,8 @@ export default {
   components: { List },
   data () {
     return {
-      calls: []
+      calls: [],
+      id: ''
     }
   },
   created () {

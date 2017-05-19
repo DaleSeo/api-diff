@@ -14,7 +14,7 @@
         <ul class="nav navbar-nav">
           <li><a href="/"><i class="fa fa-home"/> Home</a></li>
           <li><a href="/console"><i class="fa fa-terminal"/> Console</a></li>
-          <li><a href="/case"><i class="fa fa-cube"/> Test Case</a></li>
+          <li><a href="/cases"><i class="fa fa-cube"/> Test Case</a></li>
           <li><a href="/suite"><i class="fa fa-cubes"/> Test Suite</a></li>
           <li><a href="/dashboard"><i class="fa fa-dashboard"/> Dashboard</a></li>
         </ul>
