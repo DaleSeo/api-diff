@@ -1,6 +1,7 @@
 import superagent from 'superagent'
+import config from '../config'
 
-const restUrl = 'http://localhost:3000/hosts'
+const restUrl = config.BACKEND_URL + '/hosts'
 
 function list(serviceId) {
   let url = restUrl
