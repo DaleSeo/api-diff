@@ -5,13 +5,12 @@
   "author": "Dale Seo <dale.seo@gmail.com>",
   "private": true,
   "scripts": {
-    "start": "npm run dev",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --open --hot --host 0.0.0.0 --public 172.21.197.80",
     "test": "mocha --compilers js:babel-register",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "buefy": "^0.3.2",
     "firebase": "^3.7.5",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
