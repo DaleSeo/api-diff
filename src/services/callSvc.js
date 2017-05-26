@@ -3,8 +3,11 @@ import config from '../config'
 
 const restUrl = config.BACKEND_URL + '/calls'
 
-function list(serviceId) {
+function list(suiteId) {
   let url = restUrl
+  if (suiteId) {
+    url = restUrl + '/search/findBySuiteId?suiteId=' + suiteId
+  }
   console.log(url)
   return superagent.get(url)
     .then(res => res.body._embedded.calls)

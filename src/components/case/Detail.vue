@@ -123,7 +123,10 @@ export default {
   props: ["id"],
   data() {
     return {
-      call: {}
+      call: {
+        request: {},
+        response: {}
+      }
     }
   },
   created () {

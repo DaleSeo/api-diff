@@ -18,18 +18,18 @@
           <th>바디 길이</th>
         </tr>
       </thead>
-      <tbody>
         <tr v-for="call in revCalls" @click="detail(call.id)">
           <td>{{call.request.method}}</td>
           <td>{{call.request.url}}</td>
-          <td>{{Object.keys(call.request.queries).length}}</td>
-          <td>{{Object.keys(call.request.headers).length}}</td>
+          <td>{{keysLength(call.request.queries)}}</td>
+          <td>{{keysLength(call.request.headers)}}</td>
           <td>{{call.response.statusCode}} {{call.response.statusMessage}}</td>
-          <td>{{Object.keys(call.response.headers).length}}</td>
+          <td>{{keysLength(call.response.headers)}}</td>
           <td>{{call.response.headers['Content-Length'] || call.response.body.length}}</td>
           <td>{{call.createdBy || '아무게'}}</td>
           <td>{{call.createdDate | formatDate}}</td>
         </tr>
+      <tbody>
       </tbody>
     </table>
   </div>
@@ -45,6 +45,9 @@ export default {
   methods: {
     detail (id) {
       window.location.href = `/cases/${id}`
+    },
+    keysLength (object) {
+      return object ? Object.keys(object).length : 0
     }
   }
 }

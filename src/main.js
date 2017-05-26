@@ -14,14 +14,18 @@ Vue.filter('formatDate', function (date) {
 
 import Index from './components/Index.vue'
 import Service from './components/service/Service.vue'
-import SuiteDetail from './components/suite_bak/SuiteDetail.vue'
+// import SuiteDetail from './components/suite_bak/SuiteDetail.vue'
 import TestDetail from './components/test/TestDetail.vue'
 import Settings from './components/settings/Settings.vue'
 
 import Console from './components/console/Index.vue'
 import Case from './components/case/Index.vue'
 import CaseDetail from './components/case/Detail.vue'
+
 import Suite from './components/suite/Index.vue'
+import SuiteEdit from './components/suite/Edit.vue'
+import SuiteDetail from './components/suite/Detail.vue'
+
 import Dashboard from './components/dashboard/Index.vue'
 
 const router = new VueRouter({
@@ -35,7 +39,9 @@ const router = new VueRouter({
     {path: '/console', component: Console},
     {path: '/cases', component: Case},
     {path: '/cases/:id', component: CaseDetail, props: true},
-    {path: '/suite', component: Suite},
+    {path: '/suites', component: Suite},
+    {path: '/suites/new', component: SuiteEdit},
+    {path: '/suites/:id', component: SuiteDetail, props: true},
     {path: '/dashboard', component: Dashboard}
   ]
 })

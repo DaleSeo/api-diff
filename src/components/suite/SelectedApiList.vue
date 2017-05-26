@@ -1,14 +1,14 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <i class="fa fa-list"/> <strong>선택한 API</strong> <small>({{apis.length}})</small>
+      <i class="fa fa-list"/> <strong>선택한 테스트 케이스</strong> <small>({{apis.length}})</small>
     </div>
     <ul class="list-group">
-      <ApiItem
+      <SelectedApiItem
         v-for="api in apis"
         :key="api.id"
         :api="api"
-        @pick="pick"
+        @unpick="unpick"
       />
     </ul>
   </div>
@@ -21,13 +21,14 @@ import serviceSvc from '../../services/serviceSvc'
 import hostSvc from '../../services/hostSvc'
 import apiSvc from '../../services/apiSvc'
 
-import ApiItem from './ApiItem.vue'
+import SelectedApiItem from './SelectedApiItem.vue'
 
 export default {
-  components: {ApiItem},
-  data () {
-    return {
-      apis: []
+  props: ["apis"],
+  components: {SelectedApiItem},
+  methods: {
+    unpick (api) {
+      this.$emit('unpick', api)
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
-  <button class="list-group-item" @click="pick">
+  <button type="button" class="list-group-item">
     <div class="row">
       <div class="col-sm-2 text-right">
-        <button type="button" class="btn btn-danger">
-          <i class="fa fa-arrow-left"/>
+        <button type="button" class="btn btn-danger" @click="unpick">
+          <i class="fa fa-minus"/>
         </button>
       </div>
       <div class="col-sm-10">
@@ -12,7 +12,7 @@
         </h5>
         <p class="list-group-item-text">
           <span class="label" :class="className(api.method)">{{api.method}}</span>
-          &nbsp;<em>{{api.path.slice(0, 50)}}</em>
+          &nbsp;<em>{{api.url.slice(0, 50)}}</em>
         </p>
       </div>
     </div>
@@ -32,8 +32,8 @@ export default {
         default: return 'label-primary'
       }
     },
-    pick () {
-      this.$emit('pick', this.api)
+    unpick () {
+      this.$emit('unpick', this.api)
     }
   }
 }

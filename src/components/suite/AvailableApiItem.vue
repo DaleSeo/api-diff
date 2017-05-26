@@ -1,5 +1,5 @@
 <template>
-  <button class="list-group-item" @click="pick">
+  <button type="button" class="list-group-item">
     <div class="row">
       <div class="col-sm-10">
         <h5 class="list-group-item-heading">
@@ -11,8 +11,8 @@
         </p>
       </div>
       <div class="col-sm-2 text-right">
-        <button type="button" class="btn btn-primary">
-          <i class="fa fa-arrow-right"/>
+        <button type="button" class="btn btn-primary" @click="pick">
+          <i class="fa fa-plus"/>
         </button>
       </div>
     </div>
