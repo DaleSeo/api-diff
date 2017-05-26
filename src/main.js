@@ -34,6 +34,8 @@ import SuiteDetail from './components/suite/Detail.vue'
 
 import Dashboard from './components/dashboard/Index.vue'
 
+import NotFound from './components/NotFound.vue'
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -41,6 +43,7 @@ const router = new VueRouter({
     {path: '/services/:id', component: Service, props: true},
     {path: '/services/:serviceId/suites/:suiteId', component: SuiteDetail, props: true},
     {path: '/tests/:suiteId/:testId', component: TestDetail, props: true},
+    {path: '/profile', component: NotFound},
     {path: '/settings', component: Settings},
     {path: '/console', component: Console},
     {path: '/cases', component: Case},

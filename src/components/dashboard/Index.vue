@@ -1,14 +1,12 @@
 <template>
   <div class="ui container">
-    <h1 class="ui header">
+    <h1 class="ui dividing header">
       <i class="dashboard icon"></i>
       <div class="content">
         Dashboard
         <div class="sub header">대시보드</div>
       </div>
     </h1>
-
-    <hr/>
 
     <div class="ui equal width grid">
       <div class="column">
