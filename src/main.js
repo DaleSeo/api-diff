@@ -12,6 +12,12 @@ Vue.filter('formatDate', function (date) {
     return moment(date).format('YY/MM/DD HH:mm:ss')
 })
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+import '../semantic/dist/semantic.min.css'
+import '../semantic/dist/semantic.min.js'
+
 import Index from './components/Index.vue'
 import Service from './components/service/Service.vue'
 // import SuiteDetail from './components/suite_bak/SuiteDetail.vue'
