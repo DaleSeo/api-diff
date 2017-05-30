@@ -1,48 +1,63 @@
 <template>
-  <div class="container">
-    <h3>
-      <i class="fa fa-cube"/> <b>Test Case</b> <small>검증 상세</small>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-default" title="목록" @click="list">
-          <i class="fa fa-list"/> 검증 목록
-        </button>
-        <button class="btn btn-sm btn-primary" title="목록" @click="rerun">
-          <i class="fa fa-play"/> 다시 실행
-        </button>
-        <button class="btn btn-sm btn-danger" title="삭제" @click="del">
-          <i class="fa fa-trash"/> 삭제
-        </button>
+  <div class="ui container">
+    <h3 class="ui dividing header">
+      <i class="cube icon"></i>
+      <div class="content">
+        Test Case
+        <div class="sub header">
+          개별 검증 상세
+        </div>
       </div>
     </h3>
-    <hr/>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>기본 정보</strong>
-      </div>
-      <div class="panel-body" >
-        <dl class="dl-horizontal">
-            <dt>ID</dt>
-            <dd>{{call.id}}</dd>
-            <dt>수행 일시</dt>
-            <dd>{{call.createdDate | formatDate}}</dd>
-            <dt>작업자</dt>
-            <dd>{{call.createdBy || '아무게'}}</dd>
-        </dl>
-      </div>
+    <div class="ui right aligned basic segment">
+      <button class="ui mini labeled icon button" @click="list">
+        <i class="list icon"></i>
+        목록
+      </button>
+      <button class="ui mini positive labeled icon button" @click="rerun">
+        <i class="play icon"></i>
+        재실행
+      </button>
+      <button class="ui mini negative labeled icon button" @click="del">
+        <i class="trash icon"></i>
+        삭제
+      </button>
     </div>
 
-    <hr/>
-    <p class="lead"><strong>요청 상세</strong><p>
+    <div class="ui segment">
+      <h4 class="ui dividing  header">
+        기본 정보
+      </h4>
+      <p>
+        <dt>Case ID</dt>
+        <dd>{{cas.id}}</dd>
+      </p>
+      <p>
+        <dt>Service ID</dt>
+        <dd>{{cas.serviceId}}</dd>
+      </p>
+      <p>
+        <dt>수행 일시</dt>
+        <dd>{{cas.createdDate | formatDate}}</dd>
+      </p>
+      <p>
+        <dt>작업자</dt>
+        <dd>{{cas.createdBy || '아무게'}}</dd>
+      </p>
+    </div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>요청 라인</strong>
-      </div>
-      <div class="panel-body">
-        <span class="label" :class="methodClass(call.request.method)">{{call.request.method}}</span>
-        &nbsp;<strong><em>{{call.request.url}}</em></strong>
-      </div>
+    <div class="ui segment">
+      <h4 class="ui dividing  header">
+        요청 정보
+      </h4>
+      <p>
+        <dt>요청 라인</dt>
+        <dd>
+          <span class="label" :class="methodClass(cas.request.method)">{{cas.request.method}}</span>
+          &nbsp;<em>{{cas.request.url}}</em>
+        </dd>
+      </p>
     </div>
 
     <div class="panel panel-default">
@@ -51,7 +66,7 @@
       </div>
       <div class="panel-body" >
         <dl class="dl-horizontal">
-          <div v-for="(val, key) in call.request.queries">
+          <div v-for="(val, key) in cas.request.queries">
             <dt>{{key}}</dt>
             <dd>{{val}}</dd>
           </div>
@@ -65,7 +80,7 @@
       </div>
       <div class="panel-body" >
         <dl class="dl-horizontal">
-          <div v-for="(val, key) in call.request.headers">
+          <div v-for="(val, key) in cas.request.headers">
             <dt>{{key}}</dt>
             <dd>{{val}}</dd>
           </div>
@@ -77,53 +92,20 @@
       <div class="panel-heading">
         <strong>요청 바디</strong>
       </div>
-      <pre class="body">{{call.request.body}}</pre>
-    </div>
-
-    <hr/>
-    <p class="lead"><strong>응답 상세</strong><p>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>응답 상태</strong>
-      </div>
-      <div class="panel-body">
-        <strong>{{call.response.statusCode}} {{call.response.statusMessage}}</strong>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>응답 헤더</strong>
-      </div>
-      <div class="panel-body" >
-        <dl class="dl-horizontal">
-          <div v-for="(val, key) in call.response.headers">
-            <dt>{{key}}</dt>
-            <dd>{{val}}</dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>응답 바디</strong>
-      </div>
-      <pre class="body">{{call.response.body}}</pre>
+      <pre class="body">{{cas.request.body}}</pre>
     </div>
   </div>
 </template>
 
 <script>
-import callSvc from '../../services/callSvc'
+import caseSvc from '../../services/caseSvc'
 import utils from '../../services/utils'
 
 export default {
   props: ["id"],
   data() {
     return {
-      call: {
+      cas: {
         request: {},
         response: {}
       }
@@ -134,8 +116,8 @@ export default {
   },
   methods: {
     detail () {
-      callSvc.detail(this.id)
-        .then(call => this.call = call)
+      caseSvc.detail(this.id)
+        .then(cas => this.cas = cas)
     },
     list () {
       window.location.href = '/cases'
@@ -144,7 +126,7 @@ export default {
       window.location.href = '/console'
     },
     del () {
-      callSvc.remove(this.id)
+      caseSvc.remove(this.id)
         .then(this.list)
     },
     methodClass (method) {

@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <Title icon="cube" title="Test Case" subTitle="개별 검증"/>
-    <List :calls="calls"/>
+    <List :cases="cases"/>
   </div>
 </template>
 <script>
-import callSvc from '../../services/callSvc'
+import caseSvc from '../../services/caseSvc'
 
 import List from './List.vue'
 
@@ -13,7 +13,7 @@ export default {
   components: { List },
   data () {
     return {
-      calls: [],
+      cases: [],
       id: ''
     }
   },
@@ -22,8 +22,8 @@ export default {
   },
   methods: {
     list () {
-      callSvc.list(this.$route.query.suiteId)
-        .then(calls => this.calls = calls)
+      caseSvc.list(this.$route.query.suiteId)
+        .then(cases => this.cases = cases)
     }
   }
 }

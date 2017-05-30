@@ -1,7 +1,7 @@
 import superagent from 'superagent'
 import config from '../config'
 
-const restUrl = config.BACKEND_URL + '/calls'
+const restUrl = config.BACKEND_URL + '/cases'
 
 function list(suiteId) {
   let url = restUrl
@@ -10,26 +10,26 @@ function list(suiteId) {
   }
   console.log(url)
   return superagent.get(url)
-    .then(res => res.body._embedded.calls)
+    .then(res => res.body._embedded.cases)
 }
 
-function save(call) {
-  if (call.id) {
-    return modify(call.id, call)
+function save(cas) {
+  if (cas.id) {
+    return modify(cas.id, cas)
   } else {
-    delete call.id
-    return create(call)
+    delete cas.id
+    return create(cas)
   }
 }
 
-function create(call) {
+function create(cas) {
   return superagent.post(restUrl)
-    .send(call)
+    .send(cas)
 }
 
-function modify(id, call) {
+function modify(id, cas) {
   return superagent.put(restUrl + '/' + id)
-    .send(call)
+    .send(cas)
 }
 
 function detail(id) {

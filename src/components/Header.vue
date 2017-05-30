@@ -11,10 +11,10 @@
         <i class="terminal icon"/>Console
       </a>
       <a href="/cases" class="item">
-        <i class="cube icon"/>Case
+        <i class="cube icon"/>Cases
       </a>
       <a href="/suites" class="item">
-        <i class="cubes icon"/>Suite
+        <i class="cubes icon"/>Suites
       </a>
       <a href="/calls" class="item">
         <i class="history icon"/>History
