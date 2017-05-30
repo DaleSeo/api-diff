@@ -1,7 +1,7 @@
 <template>
   <div>
-    <table class="table table-hover table-bordered">
-      <thead>
+    <table class="ui selectable celled teal table">
+      <thead class="center aligned">
         <tr>
           <th colspan="4">요청 정보</th>
           <th colspan="3">응답 정보</th>
@@ -18,6 +18,7 @@
           <th>바디 길이</th>
         </tr>
       </thead>
+      <tbody>
         <tr v-for="call in revCalls" @click="detail(call.id)">
           <td>{{call.request.method}}</td>
           <td>{{call.request.url}}</td>
@@ -29,11 +30,26 @@
           <td>{{call.createdBy || '아무게'}}</td>
           <td>{{call.createdDate | formatDate}}</td>
         </tr>
-      <tbody>
       </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="9">
+            <div class="ui right floated small primary labeled icon button">
+              <i class="user icon"></i> Add User
+            </div>
+            <div class="ui small  button">
+              Approve
+            </div>
+            <div class="ui small  disabled button">
+              Approve All
+            </div>
+          </th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>
+
 <script>
 export default {
   props: ["calls"],
@@ -52,14 +68,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.table > thead > tr > th, td {
-  text-align: center;
-  vertical-align: middle;
-}
-
-.table > thead > tr > th {
-  background-color: #f5f5f5;
-}
-</style>

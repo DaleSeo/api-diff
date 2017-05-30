@@ -18,6 +18,7 @@
           <th>바디 길이</th>
         </tr>
       </thead>
+      <tbody>
         <tr v-for="call in revCalls" @click="detail(call.id)">
           <td>{{call.request.method}}</td>
           <td>{{call.request.url}}</td>
@@ -29,7 +30,6 @@
           <td>{{call.createdBy || '아무게'}}</td>
           <td>{{call.createdDate | formatDate}}</td>
         </tr>
-      <tbody>
       </tbody>
     </table>
   </div>
