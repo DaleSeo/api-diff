@@ -1,13 +1,6 @@
 <template>
   <div class="ui container">
-    <h1 class="ui dividing header">
-      <i class="dashboard icon"></i>
-      <div class="content">
-        Dashboard
-        <div class="sub header">대시보드</div>
-      </div>
-    </h1>
-
+    <Title icon="dashboard" title="Dashboard" subTitle="대시보드"/>
     <div class="ui equal width grid">
       <div class="column">
         <div class="ui statistic">

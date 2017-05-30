@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <Title icon="cube" title="Test Case" subTitle="개별 검증"/>
+  <div class="ui container">
+    <Title icon="history" title="History" subTitle="호출 이력"/>
     <List :calls="calls"/>
   </div>
 </template>

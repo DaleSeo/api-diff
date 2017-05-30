@@ -48,13 +48,14 @@ export default {
   watch: {
     serviceId (newVal) {
       this.listHosts()
+    },
+    hostId (newVal) {
       this.listApis()
-    }
+    },
   },
   created () {
     this.listServices()
     this.listHosts()
-    this.listApis()
   },
   methods: {
     listServices () {

@@ -1,7 +1,13 @@
 <template>
-  <div class="container">
-    <h3><i class="fa fa-terminal"/> <b>Console</b> <small>콘솔</small></h3>
-    <hr/>
+  <div class="ui container">
+    <h3 class="ui dividing header">
+      <i class="terminal icon"/>
+      <div class="content">
+        Console
+        <div class="sub header">콘솔</div>
+      </div>
+    </h3>
+
     <div class="row">
       <div class="col-md-4">
         <ApiList

@@ -32,6 +32,9 @@ import Suite from './components/suite/Index.vue'
 import SuiteEdit from './components/suite/Edit.vue'
 import SuiteDetail from './components/suite/Detail.vue'
 
+import Call from './components/history/Index.vue'
+import CallDetail from './components/history/Detail.vue'
+
 import Dashboard from './components/dashboard/Index.vue'
 
 import NotFound from './components/NotFound.vue'
@@ -50,6 +53,8 @@ const router = new VueRouter({
     {path: '/cases/:id', component: CaseDetail, props: true},
     {path: '/suites', component: Suite},
     {path: '/suites/new', component: SuiteEdit},
+    {path: '/calls', component: Call},
+    {path: '/calls/:id', component: CallDetail, props: true},
     {path: '/suites/:id', component: SuiteDetail, props: true},
     {path: '/dashboard', component: Dashboard}
   ]

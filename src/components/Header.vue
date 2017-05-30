@@ -1,8 +1,8 @@
 <template>
-  <div class="ui stackable inverted labeled icon menu">
+  <div class="ui stackable fixed inverted menu">
     <div class="ui container">
       <div class="header item">
-        <h1 class="ui teal inverted header" style="padding: 5px;">ONE tests</h1>
+        <h1 class="ui teal inverted header">ONE tests</h1>
       </div>
       <a href="/" class="red item">
         <i class="home icon"/>Home
@@ -11,13 +11,13 @@
         <i class="terminal icon"/>Console
       </a>
       <a href="/cases" class="item">
-        <i class="cube icon"/>Test Case
+        <i class="cube icon"/>Case
       </a>
       <a href="/suites" class="item">
-        <i class="cubes icon"/>Test Suite
+        <i class="cubes icon"/>Suite
       </a>
-      <a href="/history" class="item">
-        <i class="history icon"/>Test History
+      <a href="/calls" class="item">
+        <i class="history icon"/>History
       </a>
       <a href="/dashboard" class="item">
         <i class="dashboard icon"/>Dashboard
