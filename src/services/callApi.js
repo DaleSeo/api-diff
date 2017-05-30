@@ -1,5 +1,6 @@
 import superagent from 'superagent'
 import utils from './utils'
+import config from '../config'
 
 const restUrl = config.BACKEND_URL
 
